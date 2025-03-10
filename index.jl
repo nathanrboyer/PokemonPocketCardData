@@ -19,7 +19,7 @@ md"### Promo A"
 
 # ╔═╡ 0efcd0e6-6df0-465a-81e2-cea01ab10725
 PA = [
-
+	
 ]
 
 # ╔═╡ 238c0262-3734-4bc6-94ee-b907d91f47a0
@@ -219,15 +219,15 @@ fulldf = @chain begin rawdf
 		$[:series, :number] = split(:id, '-'),
 		$(Not(:id)),
 	)
-	@rtransform :series =
+	@rtransform! :series =
 		if length(:series) == 3
 			uppercase(:series[1]) * uppercase(:series[2]) * lowercase(:series[3])
 		else
 			uppercase(:series)
 		end
-	@rtransform :number = parse(Int, :number)
-	@rtransform :image = Resource(:image)
-	@transform :health = passmissing(parse).(Int, replace(:health, "" => missing))
+	@rtransform! :number = parse(Int, :number)
+	@rtransform! :image = Resource(:image)
+	@transform! :health = passmissing(parse).(Int, replace(:health, "" => missing))
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
@@ -296,17 +296,23 @@ end
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
 	groupby(:pack)
-	combine(
-		:image => (x -> [copy(x)]) => "Cards",
-		nrow => "Total",
-		:rarity => (x -> count(!in(["◊", "◊◊", "◊◊◊", "Promo"]), x)) => "Rare",
+	@combine(
+		$"Desired Cards" = [copy(:image)],
+		:Total = $nrow,
+		#$"◊'s" = count(in(["◊", "◊◊", "◊◊◊", "◊◊◊◊"]), :rarity),
+		#$"☆'s" = count(in(["☆", "☆☆", "☆☆☆"]), :rarity),
+		#$"♛'s" = count(in(["♛"]), :rarity),
+		:◊ = count(==("◊"), :rarity),
+		:◊◊ = count(==("◊◊"), :rarity),
+		:◊◊◊ = count(==("◊◊◊"), :rarity),
+		:◊◊◊◊ = count(==("◊◊◊◊"), :rarity),
+		:☆ = count(==("☆"), :rarity),
+		:☆☆ = count(==("☆☆"), :rarity),
+		:☆☆☆ = count(==("☆☆☆"), :rarity),
+		:♛ = count(==("Crown Rare"), :rarity),
 	)
-	@rtransform!(:pack = [pack_images[:pack]])
-	rename!(:pack => "Pack")
-	sort!([
-		order("Total", rev=true),
-		order("Rare", rev=false),
-	])
+	@rselect!(:Pack = [pack_images[:pack]], $(Not(:pack)))
+	sort!([:Total, :◊, :◊◊, :◊◊◊, :◊◊◊◊, :☆, :☆☆, :☆☆☆, :♛], rev=true)
 end
 
 # ╔═╡ 92588797-2b09-4146-bce6-68a5a5cf428c
@@ -316,8 +322,8 @@ md"## Data Summary"
 @chain begin fulldf
 	groupby(:series)
 	combine(nrow)
-	rename(["Series","Total Cards"])
-	sort
+	rename!(["Series", "Total Cards"])
+	sort!
 end
 
 # ╔═╡ 404c6734-61d2-4dc3-839c-204a16a561d5
@@ -327,11 +333,12 @@ end
 		nrow, 
 		:series => unique => :series,
 	)
-	sort([:series, :pack])
-	select(
-		:series => identity => "Series",
-		:pack => identity => "Pack",
-		:nrow => identity => "Total Cards",
+	sort!([:series, :pack])
+	select!(:series, :)
+	rename!(
+		:series => "Series",
+		:pack => "Pack",
+		:nrow => "Total Cards",
 	)
 end
 
@@ -339,7 +346,7 @@ end
 @chain begin fulldf
 	groupby(:rarity)
 	combine(nrow)
-	rename(["Rarity","Total Cards"])
+	rename!(["Rarity", "Total Cards"])
 end
 
 # ╔═╡ 5b7621b1-d0da-4955-844c-fd4c31373efd
