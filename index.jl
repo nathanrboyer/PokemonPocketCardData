@@ -19,7 +19,7 @@ md"### Promo A"
 
 # ╔═╡ 0efcd0e6-6df0-465a-81e2-cea01ab10725
 PA = [
-	
+
 ]
 
 # ╔═╡ 238c0262-3734-4bc6-94ee-b907d91f47a0
@@ -73,7 +73,7 @@ A2 = [
 	129
 	136
 	150
-	
+
 ]
 
 # ╔═╡ 6e1dad95-b6ec-409a-bc6c-fbf479f05ac0
@@ -219,7 +219,7 @@ fulldf = @chain begin rawdf
 		$[:series, :number] = split(:id, '-'),
 		$(Not(:id)),
 	)
-	@rtransform :series = 
+	@rtransform :series =
 		if length(:series) == 3
 			uppercase(:series[1]) * uppercase(:series[2]) * lowercase(:series[3])
 		else
@@ -334,7 +334,7 @@ end
 end
 
 # ╔═╡ 5b7621b1-d0da-4955-844c-fd4c31373efd
-md"## Load Packages"
+md"## Package Loading"
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
