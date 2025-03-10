@@ -237,10 +237,10 @@ end
 @rsubset(fulldf, :health ≥ 180).image
 
 # ╔═╡ dd81ee04-72ca-4a2b-aa9a-24c9a91dbf7c
-@rsubset(fulldf, :rarity == "☆☆☆")[:,[:image,:series,:number]]
+@rsubset(fulldf, :rarity == "☆")[:, [:image, :series, :number]]
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(fulldf, :series == "A2")[:, [:number, :image]]
+@rsubset(fulldf, :series == "A2a")[:, [:number, :image]]
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 @rsubset(fulldf, :series == "A2", :number == 204).image |> only
