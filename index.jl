@@ -317,13 +317,22 @@ md"## Data Summary"
 	groupby(:series)
 	combine(nrow)
 	rename(["Series","Total Cards"])
+	sort
 end
 
 # ╔═╡ 404c6734-61d2-4dc3-839c-204a16a561d5
 @chain begin fulldf
 	groupby(:pack)
-	combine(nrow)
-	rename(["Pack","Total Cards"])
+	combine(
+		nrow, 
+		:series => unique => :series,
+	)
+	sort([:series, :pack])
+	select(
+		:series => identity => "Series",
+		:pack => identity => "Pack",
+		:nrow => identity => "Total Cards",
+	)
 end
 
 # ╔═╡ 97e51f8d-91d4-4aab-a594-516b3aae6d90
