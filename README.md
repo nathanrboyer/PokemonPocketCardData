@@ -1,5 +1,5 @@
 # Pokemon Pocket Card Data
-A [Notebook](https://plutojl.org/)
+A [notebook](https://plutojl.org/)
 for visual filtering of [Pokemon Pocket](https://tcgpocket.pokemon.com/en-us/) card data.
 Its main function is to provide information on which card packs you should open
 based on which cards you are missing.
