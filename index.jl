@@ -29,11 +29,10 @@ md"### Genetic Apex"
 A1 = [
 	41
 	45
-	84
 	125
-	128
 	203
 	267
+	275
 ]
 
 # ╔═╡ 89d6ecd9-1185-47c9-b0ad-fcbc2d8b7941
@@ -41,9 +40,9 @@ md"### Mythical Island"
 
 # ╔═╡ 1c594f1f-5119-4e65-b873-9a98de628d7e
 A1a = [
-	3
 	46
 	72
+	84
 ]
 
 # ╔═╡ c9a803a2-d30f-4acf-86ee-6a0732a25345
@@ -55,7 +54,6 @@ A2 = [
 	29
 	37
 	41
-	50
 	53
 	61
 	67
@@ -73,7 +71,8 @@ A2 = [
 	129
 	136
 	150
-
+	197
+	198
 ]
 
 # ╔═╡ 6e1dad95-b6ec-409a-bc6c-fbf479f05ac0
@@ -100,6 +99,7 @@ A2a = [
 	61
 	69
 	71
+	96
 ]
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -227,11 +227,12 @@ fulldf = @chain begin rawdf
 		end
 	@rtransform! :number = parse(Int, :number)
 	@rtransform! :image = Resource(:image)
+	@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
 	@transform! :health = passmissing(parse).(Int, replace(:health, "" => missing))
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(fulldf, contains(:name, "Gastly"))
+@rsubset(fulldf, contains(:name, r"blast"i))
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(fulldf, :health ≥ 180).image
@@ -240,10 +241,10 @@ end
 @rsubset(fulldf, :rarity == "☆")[:, [:image, :series, :number]]
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(fulldf, :series == "A2a")[:, [:number, :image]]
+@rsubset(fulldf, :series == "A2a")[:, [:image, :number]]
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(fulldf, :series == "A2", :number == 204).image |> only
+@rsubset(fulldf, :series == "A1", :number == 280).image |> only
 
 # ╔═╡ f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
 seriespacks = let gdf = groupby(fulldf, :series)
@@ -295,24 +296,28 @@ end
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
-	groupby(:pack)
-	@combine(
-		$"Desired Cards" = [copy(:image)],
-		:Total = $nrow,
-		#$"◊'s" = count(in(["◊", "◊◊", "◊◊◊", "◊◊◊◊"]), :rarity),
-		#$"☆'s" = count(in(["☆", "☆☆", "☆☆☆"]), :rarity),
-		#$"♛'s" = count(in(["♛"]), :rarity),
-		:◊ = count(==("◊"), :rarity),
-		:◊◊ = count(==("◊◊"), :rarity),
-		:◊◊◊ = count(==("◊◊◊"), :rarity),
-		:◊◊◊◊ = count(==("◊◊◊◊"), :rarity),
-		:☆ = count(==("☆"), :rarity),
-		:☆☆ = count(==("☆☆"), :rarity),
-		:☆☆☆ = count(==("☆☆☆"), :rarity),
-		:♛ = count(==("Crown Rare"), :rarity),
+	groupby([:pack, :rarity])
+	combine(
+		:image => (x -> [copy(x)]),
+		nrow,
+		renamecols = false,
 	)
-	@rselect!(:Pack = [pack_images[:pack]], $(Not(:pack)))
-	sort!([:Total, :◊, :◊◊, :◊◊◊, :◊◊◊◊, :☆, :☆☆, :☆☆☆, :♛], rev=true)
+	sort!(:rarity)
+	unstack(:rarity, :nrow, fill=0)
+	groupby(:pack)
+	combine(
+		:image => (x -> [reduce(vcat, x)]),
+		Not(:pack, :image) .=> sum,
+		renamecols = false,
+	)
+	transform!(Not(:pack, :image) => (+) => :total)
+	select!(
+		:pack => ByRow(x -> [pack_images[x]]) => "Pack",
+		:image => "Desired Cards",
+		:total => "Total",
+		Not(:pack, :image, :total),
+	)
+	sort!("Total", rev=true)
 end
 
 # ╔═╡ 92588797-2b09-4146-bce6-68a5a5cf428c
@@ -335,6 +340,7 @@ end
 	)
 	sort!([:series, :pack])
 	select!(:series, :)
+	@aside packs = _.pack
 	rename!(
 		:series => "Series",
 		:pack => "Pack",
@@ -346,6 +352,7 @@ end
 @chain begin fulldf
 	groupby(:rarity)
 	combine(nrow)
+	@aside rarities = _.rarity
 	rename!(["Rarity", "Total Cards"])
 end
 
