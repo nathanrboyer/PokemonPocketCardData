@@ -40,7 +40,6 @@ md"### Mythical Island"
 
 # ╔═╡ 1c594f1f-5119-4e65-b873-9a98de628d7e
 A1a = [
-	46
 	72
 	84
 ]
@@ -62,7 +61,6 @@ A2 = [
 	79
 	82
 	92
-	95
 	109
 	110
 	123
@@ -72,7 +70,6 @@ A2 = [
 	136
 	150
 	197
-	198
 ]
 
 # ╔═╡ 6e1dad95-b6ec-409a-bc6c-fbf479f05ac0
@@ -81,7 +78,6 @@ md"### Triumphant Light"
 # ╔═╡ 31d599a7-e4d8-4c64-bb68-de6246325213
 A2a = [
 	5
-	7
 	10
 	12
 	13
@@ -99,7 +95,6 @@ A2a = [
 	61
 	69
 	71
-	96
 ]
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -378,7 +373,7 @@ PlutoUI = "~0.7.23"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.3"
+julia_version = "1.11.4"
 manifest_format = "2.0"
 project_hash = "621d443c0f16fbcd161b3ce40000d5a4a5613d67"
 
