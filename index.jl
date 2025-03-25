@@ -50,14 +50,12 @@ md"### Space-Time Smackdown"
 # ╔═╡ 7a394f68-ce0f-47d5-8515-5169925ae687
 A2 = [
 	24
-	29
 	37
 	41
 	53
 	61
 	67
 	71
-	75
 	79
 	82
 	92
@@ -77,19 +75,14 @@ md"### Triumphant Light"
 
 # ╔═╡ 31d599a7-e4d8-4c64-bb68-de6246325213
 A2a = [
-	5
-	10
 	12
 	13
 	17
 	21
-	26
 	32
 	41
-	42
 	47
 	50
-	51
 	55
 	57
 	61
@@ -152,6 +145,8 @@ Pack images are scraped from [serebii.net](https://www.serebii.net/tcgpocket).
 If this stops working, some other potential sources for Pokémon data are listed below.
 
 - https://pocket.limitlesstcg.com/cards/
+
+- https://www.pokemon-zone.com/cards/
 
 - https://github.com/LucachuTW/CARDS-PokemonPocket-scrapper
 
@@ -227,7 +222,7 @@ fulldf = @chain begin rawdf
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(fulldf, contains(:name, r"blast"i))
+@rsubset(fulldf, contains(:name, r"infer"i))
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(fulldf, :health ≥ 180).image
