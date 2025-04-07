@@ -331,7 +331,7 @@ end
 	)
 	transform!(Not(:pack, :image) => (+) => :total)
 	select!(
-		:pack => ByRow(x -> [pack_images[x]]) => "Pack",
+		:pack => ByRow(x -> pack_images[x]) => "Pack",
 		:image => "Desired Cards",
 		:total => "Total",
 		Not(:pack, :image, :total),
