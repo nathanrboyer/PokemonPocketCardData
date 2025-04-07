@@ -1,20 +1,20 @@
 # Pokemon Pocket Card Data
 A [notebook](https://plutojl.org/)
 for visual filtering of [Pokemon Pocket](https://tcgpocket.pokemon.com/en-us/) card data.
-Its main function is to provide information on which card packs you should open
-based on which cards you are missing.
-Click on [this link](https://nathanrboyer.github.io/PokemonPocketCardData/)
-to open the notebook.
-Then click the button in the top right corner to run and edit it.
-(It will run significantly faster with a local installation of [Julia](https://julialang.org/).)
-Enter your desired card numbers in each series in the "Input" section
-to filter the database.
+Its main function is to provide information on which card packs to open
+based on which cards you desire.
+**[CLICK HERE](https://nathanrboyer.github.io/PokemonPocketCardData/)**
+to preview the notebook.
+Then click the button in the top-right corner to download and edit it.
+
+(Usually the presented Binder cloud option is unusably slow,
+so you will want to follow the instructions to run the notebook locally.)
 
 *Thanks to [Chase Manning](https://github.com/chase-manning/pokemon-tcg-pocket-cards)
 for providing the card database.*
 
 <details>
-<summary>License</summary>
+<summary><a href="https://unlicense.org"> Unlicense</a> License</summary>
 
 ```
 This is free and unencumbered software released into the public domain.
