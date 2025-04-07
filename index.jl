@@ -118,7 +118,10 @@ md"# Card Lookup"
 
 # ╔═╡ 6ae9d1a2-3733-40e2-ba0e-6a563cb76ae7
 md"""
-Search the database by series, number, name, rarity, pack, or health. Edit any of the examples below.
+Use this section to search the card database.
+Example data frame filters are provided below.
+
+Edit these or add your own!
 """
 
 # ╔═╡ 53835b1f-c7e4-47ee-a36f-4adcd2a34182
