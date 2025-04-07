@@ -14,14 +14,6 @@ md"# Input"
 # ╔═╡ 8e188e7d-5a2d-4d5c-a5a9-81934aa7e01a
 md"## List Desired Card Numbers in each Series"
 
-# ╔═╡ 6c639740-2210-4671-b96d-478c7631a2b6
-md"### Promo A"
-
-# ╔═╡ 0efcd0e6-6df0-465a-81e2-cea01ab10725
-PA = [
-	
-]
-
 # ╔═╡ 238c0262-3734-4bc6-94ee-b907d91f47a0
 md"### Genetic Apex"
 
@@ -89,13 +81,14 @@ md"### Shining Revelry"
 
 # ╔═╡ ef199255-e146-4bc8-b2d0-accd69e97d83
 A2b = [
+	1
+	3
 	12
 	20
-	32
-	44
 	48
 	50
-	65
+	54
+	56
 	76
 	89
 	93
@@ -104,7 +97,6 @@ A2b = [
 
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 desired_card_numbers = Dict(
-	"PA" => PA,
 	"A1" => A1,
 	"A1a" => A1a,
 	"A2" => A2,
@@ -189,7 +181,7 @@ pack_images = Dict(
 	"Mewtwo" => Resource(
 		"https://www.serebii.net/tcgpocket/geneticapex/mewtwo.jpg"
 	),
-	"Mew" => Resource(
+	"Mythical Island" => Resource(
 		"https://www.serebii.net/tcgpocket/mythicalisland/mew.jpg"
 	),
 	"Dialga" => Resource(
@@ -201,7 +193,7 @@ pack_images = Dict(
 	"Arceus" => Resource(
 		"https://www.serebii.net/tcgpocket/triumphantlight/arceus.jpg"
 	),
-	"ShiningRevelry" => Resource(
+	"Shining Revelry" => Resource(
 		"https://www.serebii.net/tcgpocket/shiningrevelry/booster.jpg"
 	),
 	"PA" => Resource(
@@ -270,11 +262,6 @@ seriespacks = let gdf = groupby(fulldf, :series)
 		push!(d, key.series => packs)
 	end
 	filter!.(!contains("Shared"), values(d))
-	filter!.(!contains("Achievement"), values(d))
-	d["A1a"] = ["Mew"]
-	d["A2a"] = ["Arceus"]
-	d["A2b"] = ["ShiningRevelry"]
-	d["PA"]  = ["PromoA"]
 	d
 end
 
@@ -927,8 +914,6 @@ version = "17.4.0+2"
 # ╔═╡ Cell order:
 # ╟─34436b8a-b8ad-4875-bf99-86b8f8b2a695
 # ╟─8e188e7d-5a2d-4d5c-a5a9-81934aa7e01a
-# ╟─6c639740-2210-4671-b96d-478c7631a2b6
-# ╠═0efcd0e6-6df0-465a-81e2-cea01ab10725
 # ╟─238c0262-3734-4bc6-94ee-b907d91f47a0
 # ╠═4b18f32c-4621-4474-bf3f-808ec2b4fe1f
 # ╟─89d6ecd9-1185-47c9-b0ad-fcbc2d8b7941
