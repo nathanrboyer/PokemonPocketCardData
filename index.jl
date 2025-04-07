@@ -82,7 +82,6 @@ md"### Shining Revelry"
 # ╔═╡ ef199255-e146-4bc8-b2d0-accd69e97d83
 A2b = [
 	1
-	3
 	12
 	20
 	48
