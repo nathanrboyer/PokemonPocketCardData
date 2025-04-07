@@ -152,19 +152,6 @@ md"""
 Card data is scraped from [Chase Manning's Github repository](https://github.com/chase-manning/pokemon-tcg-pocket-cards).
 
 Pack images are scraped from [serebii.net](https://www.serebii.net/tcgpocket).
-
-If this stops working, some other potential sources for Pokémon data are listed below.
-
-- https://pocket.limitlesstcg.com/cards/
-
-- https://www.pokemon-zone.com/cards/
-
-- https://github.com/LucachuTW/CARDS-PokemonPocket-scrapper
-
-- https://github.com/diogofelizardo/PocketDB
-
-- https://github.com/lu-jim/pokemon-tcgp
-
 """
 
 # ╔═╡ e0de3c3d-4a10-4da3-a3a6-8783543fe0c0
@@ -211,6 +198,19 @@ begin
 		]),
 	)
 	rawdf = website_response.body |> jsontable |> DataFrame
+	alternate_sources = md"""
+		If this stops working, some other potential sources for Pokémon data are listed below.
+		
+		- https://pocket.limitlesstcg.com/cards/
+		
+		- https://www.pokemon-zone.com/cards/
+		
+		- https://github.com/LucachuTW/CARDS-PokemonPocket-scrapper
+		
+		- https://github.com/diogofelizardo/PocketDB
+		
+		- https://github.com/lu-jim/pokemon-tcgp
+	"""
 	Text("Data scraped successfully.")
 end
 
