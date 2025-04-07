@@ -8,11 +8,15 @@ using InteractiveUtils
 # ╠═╡ show_logs = false
 using DataFramesMeta, HTTP, JSONTables, PlutoUI
 
-# ╔═╡ 34436b8a-b8ad-4875-bf99-86b8f8b2a695
-md"# Input"
+# ╔═╡ 01d0206c-90d7-4dab-a1be-52619d154f40
+md"# Desired Cards"
 
-# ╔═╡ 8e188e7d-5a2d-4d5c-a5a9-81934aa7e01a
-md"## List Desired Card Numbers in each Series"
+# ╔═╡ 34436b8a-b8ad-4875-bf99-86b8f8b2a695
+md"""
+Use this section to enter the card numbers you desire in each series.
+
+This data will be used to filter the database and sort it by number of desired cards per pack.
+"""
 
 # ╔═╡ 238c0262-3734-4bc6-94ee-b907d91f47a0
 md"### Genetic Apex"
@@ -25,7 +29,7 @@ A1 = [
 	203
 	267
 	275
-]
+];
 
 # ╔═╡ 89d6ecd9-1185-47c9-b0ad-fcbc2d8b7941
 md"### Mythical Island"
@@ -34,7 +38,7 @@ md"### Mythical Island"
 A1a = [
 	72
 	84
-]
+];
 
 # ╔═╡ c9a803a2-d30f-4acf-86ee-6a0732a25345
 md"### Space-Time Smackdown"
@@ -55,7 +59,7 @@ A2 = [
 	128
 	129
 	197
-]
+];
 
 # ╔═╡ 6e1dad95-b6ec-409a-bc6c-fbf479f05ac0
 md"### Triumphant Light"
@@ -74,7 +78,7 @@ A2a = [
 	61
 	69
 	71
-]
+];
 
 # ╔═╡ 3cc50f07-e16c-4b0d-9799-cf61671a5e3d
 md"### Shining Revelry"
@@ -92,25 +96,13 @@ A2b = [
 	89
 	93
 	96
-]
-
-# ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
-desired_card_numbers = Dict(
-	"A1" => A1,
-	"A1a" => A1a,
-	"A2" => A2,
-	"A2a" => A2a,
-	"A2b" => A2b,
-)
+];
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
-md"# Output"
+md"# Pack Information"
 
-# ╔═╡ c47b22d5-fa58-4c3e-b8cf-b79d2a6fc9c7
-md"## Selected Cards"
-
-# ╔═╡ 9bd4985d-beb3-4431-acf1-d734b4f6585e
-md"## Pack Information"
+# ╔═╡ da513126-14d4-4eaa-8e7a-f6339cb2bc17
+md"Use this section to decide which pack would be best to open next."
 
 # ╔═╡ 86e7000b-3675-4703-8819-470f793c2d69
 md"# Card Lookup"
@@ -125,6 +117,9 @@ Edit these or add your own!
 
 # ╔═╡ 53835b1f-c7e4-47ee-a36f-4adcd2a34182
 md"# Appendix"
+
+# ╔═╡ 7079b6c8-bee9-4e5f-a62a-f0e0617b7225
+md"Everything below are data processing internals presented for informational purposes."
 
 # ╔═╡ 7284ca8c-09e5-44ab-98de-db8d2e56053d
 md"## Function Definitions"
@@ -289,12 +284,34 @@ function unpack_shared(df_original)
 	return df
 end
 
-# ╔═╡ cc875dfe-baae-4a6a-95f3-d638fe2aa7a1
+# ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 begin
+	desired_card_numbers = Dict(
+		"A1" => A1,
+		"A1a" => A1a,
+		"A2" => A2,
+		"A2a" => A2a,
+		"A2b" => A2b,
+	)
 	desired_cards = filter_by_desired(fulldf, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
-	desired_cards_images = desired_cards.image
+	Text("Card data successfully filtered by desired.")
 end
+
+# ╔═╡ 136c4134-3423-447c-8a38-e3346407112c
+@rsubset(desired_cards, :series == "A1").image
+
+# ╔═╡ fbc08814-1279-4614-99ae-c3f23434ad17
+@rsubset(desired_cards, :series == "A1a").image
+
+# ╔═╡ e3813ced-c01a-4745-99b3-fd77bf6ee6ba
+@rsubset(desired_cards, :series == "A2").image
+
+# ╔═╡ c01d4362-bdf1-4e40-b6ee-246fbb5be730
+@rsubset(desired_cards, :series == "A2a").image
+
+# ╔═╡ f659b84a-22f5-4aa9-a2c4-ece9a1175ede
+@rsubset(desired_cards, :series == "A2b").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -359,7 +376,7 @@ end
 end
 
 # ╔═╡ 5b7621b1-d0da-4955-844c-fd4c31373efd
-md"## Package Loading"
+md"## Dependency Package Loading"
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -914,23 +931,26 @@ version = "17.4.0+2"
 """
 
 # ╔═╡ Cell order:
+# ╟─01d0206c-90d7-4dab-a1be-52619d154f40
 # ╟─34436b8a-b8ad-4875-bf99-86b8f8b2a695
-# ╟─8e188e7d-5a2d-4d5c-a5a9-81934aa7e01a
 # ╟─238c0262-3734-4bc6-94ee-b907d91f47a0
 # ╠═4b18f32c-4621-4474-bf3f-808ec2b4fe1f
+# ╟─136c4134-3423-447c-8a38-e3346407112c
 # ╟─89d6ecd9-1185-47c9-b0ad-fcbc2d8b7941
 # ╠═1c594f1f-5119-4e65-b873-9a98de628d7e
+# ╟─fbc08814-1279-4614-99ae-c3f23434ad17
 # ╟─c9a803a2-d30f-4acf-86ee-6a0732a25345
 # ╠═7a394f68-ce0f-47d5-8515-5169925ae687
+# ╟─e3813ced-c01a-4745-99b3-fd77bf6ee6ba
 # ╟─6e1dad95-b6ec-409a-bc6c-fbf479f05ac0
 # ╠═31d599a7-e4d8-4c64-bb68-de6246325213
+# ╟─c01d4362-bdf1-4e40-b6ee-246fbb5be730
 # ╟─3cc50f07-e16c-4b0d-9799-cf61671a5e3d
 # ╠═ef199255-e146-4bc8-b2d0-accd69e97d83
+# ╟─f659b84a-22f5-4aa9-a2c4-ece9a1175ede
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
-# ╟─c47b22d5-fa58-4c3e-b8cf-b79d2a6fc9c7
-# ╟─cc875dfe-baae-4a6a-95f3-d638fe2aa7a1
-# ╟─9bd4985d-beb3-4431-acf1-d734b4f6585e
+# ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
 # ╟─5726b945-44d7-4208-bc85-200a73863e21
 # ╟─86e7000b-3675-4703-8819-470f793c2d69
 # ╟─6ae9d1a2-3733-40e2-ba0e-6a563cb76ae7
@@ -940,6 +960,7 @@ version = "17.4.0+2"
 # ╠═684d49af-05c5-4fae-84c0-33867f619371
 # ╠═762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 # ╟─53835b1f-c7e4-47ee-a36f-4adcd2a34182
+# ╟─7079b6c8-bee9-4e5f-a62a-f0e0617b7225
 # ╟─7284ca8c-09e5-44ab-98de-db8d2e56053d
 # ╟─42d22e06-8fd2-42a4-90ca-f81fafb66b7d
 # ╟─b8765ce3-da72-4b92-acb8-f8cec96df80d
