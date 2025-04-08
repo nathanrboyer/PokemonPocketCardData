@@ -157,35 +157,47 @@ Pack images are scraped from [serebii.net](https://www.serebii.net/tcgpocket).
 """
 
 # ╔═╡ e0de3c3d-4a10-4da3-a3a6-8783543fe0c0
-pack_images = Dict(
-	"Charizard" => Resource(
-		"https://www.serebii.net/tcgpocket/geneticapex/charizard.jpg"
-	),
-	"Pikachu" => Resource(
-		"https://www.serebii.net/tcgpocket/geneticapex/pikachu.jpg"
-	),
-	"Mewtwo" => Resource(
-		"https://www.serebii.net/tcgpocket/geneticapex/mewtwo.jpg"
-	),
-	"Mythical Island" => Resource(
-		"https://www.serebii.net/tcgpocket/mythicalisland/mew.jpg"
-	),
-	"Dialga" => Resource(
-		"https://www.serebii.net/tcgpocket/space-timesmackdown/dialga.jpg"
-	),
-	"Palkia" => Resource(
-		"https://www.serebii.net/tcgpocket/space-timesmackdown/palkia.jpg"
-	),
-	"Arceus" => Resource(
-		"https://www.serebii.net/tcgpocket/triumphantlight/arceus.jpg"
-	),
-	"Shining Revelry" => Resource(
-		"https://www.serebii.net/tcgpocket/shiningrevelry/booster.jpg"
-	),
-	"PA" => Resource(
-		"https://www.serebii.net/tcgpocket/logo/promo-a.png"
+begin
+	image_width = 60
+	pack_images = Dict(
+		"Charizard" => Resource(
+			"https://www.serebii.net/tcgpocket/geneticapex/charizard.jpg",
+			:width =>image_width,
+		),
+		"Pikachu" => Resource(
+			"https://www.serebii.net/tcgpocket/geneticapex/pikachu.jpg",
+			:width => image_width,
+		),
+		"Mewtwo" => Resource(
+			"https://www.serebii.net/tcgpocket/geneticapex/mewtwo.jpg",
+			:width => image_width,
+		),
+		"Mythical Island" => Resource(
+			"https://www.serebii.net/tcgpocket/mythicalisland/mew.jpg",
+			:width => image_width,
+		),
+		"Dialga" => Resource(
+			"https://www.serebii.net/tcgpocket/space-timesmackdown/dialga.jpg",
+			:width => image_width,
+		),
+		"Palkia" => Resource(
+			"https://www.serebii.net/tcgpocket/space-timesmackdown/palkia.jpg",
+			:width => image_width,
+		),
+		"Arceus" => Resource(
+			"https://www.serebii.net/tcgpocket/triumphantlight/arceus.jpg",
+			:width => image_width,
+		),
+		"Shining Revelry" => Resource(
+			"https://www.serebii.net/tcgpocket/shiningrevelry/booster.jpg",
+			:width => image_width,
+		),
+		"PA" => Resource(
+			"https://www.serebii.net/tcgpocket/logo/promo-a.png",
+			:width => image_width,
+		)
 	)
-)
+end
 
 # ╔═╡ d9d35c7c-311d-4ae1-8737-80ff3500744a
 begin
@@ -376,6 +388,34 @@ end
 	@aside rarities = _.rarity
 	rename!(["Rarity", "Total Cards"])
 end
+
+# ╔═╡ 9888e0c8-335a-45f7-a16f-2ffda567f98b
+md"## HTML Tweaks"
+
+# ╔═╡ 0c19b482-4946-4ee4-96db-0b5fc5f6f551
+# Increase page width
+# Reference: https://discourse.julialang.org/t/pluto-pdf-and-printing/65055/5
+html"""
+<style>
+body:not(.fake_class) main {
+	max-width: 50%;
+	margin-right: 0px;
+	align-self: center;
+}
+</style>
+"""
+
+# ╔═╡ 46bf0b39-6f4a-4748-bcd4-07cdb9ec3272
+# Increase vertical cell height
+# Reference: https://stackoverflow.com/questions/66624243/how-to-fit-pluto-jl-output-cell-to-dataframe-size
+html"""<style>
+pluto-output.scroll_y {
+    max-height: 600px;
+}
+"""
+
+# ╔═╡ bc238aa5-05db-40bc-9ed1-cfa8dd891441
+Text("Page width and scroll bar height were increased.")
 
 # ╔═╡ 5b7621b1-d0da-4955-844c-fd4c31373efd
 md"## Dependency Package Loading"
@@ -977,6 +1017,10 @@ version = "17.4.0+2"
 # ╟─7b2279cb-dbf4-4077-8c66-002d925b7806
 # ╟─404c6734-61d2-4dc3-839c-204a16a561d5
 # ╟─97e51f8d-91d4-4aab-a594-516b3aae6d90
+# ╟─9888e0c8-335a-45f7-a16f-2ffda567f98b
+# ╟─0c19b482-4946-4ee4-96db-0b5fc5f6f551
+# ╟─46bf0b39-6f4a-4748-bcd4-07cdb9ec3272
+# ╟─bc238aa5-05db-40bc-9ed1-cfa8dd891441
 # ╟─5b7621b1-d0da-4955-844c-fd4c31373efd
 # ╠═aa94d7a0-b24a-11ef-2de2-47a66b1c37be
 # ╟─00000000-0000-0000-0000-000000000001
