@@ -211,18 +211,18 @@ begin
 			".json",
 		]),
 	)
-	rawdf = website_response.body |> jsontable |> DataFrame
+	data_download = website_response.body |> jsontable |> DataFrame
 	alternate_sources = md"""
 		If this stops working, some other potential sources for Pokémon data are listed below.
-		
+
 		- https://pocket.limitlesstcg.com/cards/
-		
+
 		- https://www.pokemon-zone.com/cards/
-		
+
 		- https://github.com/LucachuTW/CARDS-PokemonPocket-scrapper
-		
+
 		- https://github.com/diogofelizardo/PocketDB
-		
+
 		- https://github.com/lu-jim/pokemon-tcgp
 	"""
 	Text("Data scraped successfully.")
@@ -232,7 +232,7 @@ end
 md"## Data Cleaning"
 
 # ╔═╡ b7486cfa-fc49-4cde-993e-78d6d5768db0
-fulldf = @chain begin rawdf
+card_data = @chain begin data_download
 	@rselect(
 		$[:series, :number] = split(:id, '-'),
 		$(Not(:id)),
@@ -250,22 +250,22 @@ fulldf = @chain begin rawdf
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(fulldf, contains(:name, r"blast"i))
+@rsubset(card_data, contains(:name, r"blast"i))
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
-@rsubset(fulldf, :health ≥ 180).image
+@rsubset(card_data, :health ≥ 180).image
 
 # ╔═╡ dd81ee04-72ca-4a2b-aa9a-24c9a91dbf7c
-@rsubset(fulldf, :rarity == "☆")[:, [:image, :series, :number]]
+@rsubset(card_data, :rarity == "☆")[:, [:image, :series, :number]]
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(fulldf, :series == "A2b")[:, [:image, :number]]
+@rsubset(card_data, :series == "A2b")[:, [:image, :number]]
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(fulldf, :series == "A1", :number == 280).image |> only
+@rsubset(card_data, :series == "A1", :number == 280).image |> only
 
 # ╔═╡ f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
-seriespacks = let gdf = groupby(fulldf, :series)
+seriespacks = let gdf = groupby(card_data, :series)
 	d = Dict{String,Vector{String}}()
 	for (key, df) in pairs(gdf)
 		packs = unique(df.pack)
@@ -280,12 +280,12 @@ end
 """
 	unpack_shared(df)
 
-Convert rows with a "Shared(<series_name>)" or "Every" pack value into multiple rows with specific packs.
+Convert rows with a "Shared(<series_name>)" pack value into multiple rows with specific packs.
 """
 function unpack_shared(df_original)
 	df = copy(df_original)
 	for row in eachrow(df)
-		if contains(row.pack, "Every") || contains(row.pack, "Shared")
+		if contains(row.pack, "Shared")
 			for packname in seriespacks[row.series]
 				newrow = copy(row)
 				newrow = (newrow..., pack = packname)
@@ -293,7 +293,7 @@ function unpack_shared(df_original)
 			end
 		end
 	end
-	@rsubset!(df, :pack != "Every", !contains(:pack, "Shared"))
+	@rsubset!(df, !contains(:pack, "Shared"))
 	sort!(df, [:series, :number])
 	return df
 end
@@ -307,7 +307,7 @@ begin
 		"A2a" => A2a,
 		"A2b" => A2b,
 	)
-	desired_cards = filter_by_desired(fulldf, desired_card_numbers)
+	desired_cards = filter_by_desired(card_data, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
 	Text("Card data successfully filtered by desired.")
 end
@@ -357,7 +357,7 @@ end
 md"## Data Summary"
 
 # ╔═╡ 7b2279cb-dbf4-4077-8c66-002d925b7806
-@chain begin fulldf
+@chain begin card_data
 	groupby(:series)
 	combine(nrow)
 	rename!(["Series", "Total Cards"])
@@ -365,10 +365,10 @@ md"## Data Summary"
 end
 
 # ╔═╡ 404c6734-61d2-4dc3-839c-204a16a561d5
-@chain begin fulldf
+@chain begin card_data
 	groupby(:pack)
 	combine(
-		nrow, 
+		nrow,
 		:series => unique => :series,
 	)
 	sort!([:series, :pack])
@@ -382,7 +382,7 @@ end
 end
 
 # ╔═╡ 97e51f8d-91d4-4aab-a594-516b3aae6d90
-@chain begin fulldf
+@chain begin card_data
 	groupby(:rarity)
 	combine(nrow)
 	@aside rarities = _.rarity
