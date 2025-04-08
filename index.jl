@@ -401,10 +401,11 @@ Text("Page width and scroll bar height were increased from the default values.")
 # ╔═╡ 0c19b482-4946-4ee4-96db-0b5fc5f6f551
 # Increase page width
 # Reference: https://discourse.julialang.org/t/pluto-pdf-and-printing/65055/5
+# Reference: https://discourse.julialang.org/t/cell-width-in-pluto-notebook/49761/11
 html"""
 <style>
 body:not(.fake_class) main {
-	max-width: 50%;
+	max-width: max(50%, 1000px);
 	margin-right: 0px;
 	align-self: center;
 }
