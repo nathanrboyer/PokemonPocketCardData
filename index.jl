@@ -393,7 +393,7 @@ end
 md"## Dependency Package Loading"
 
 # ╔═╡ 9888e0c8-335a-45f7-a16f-2ffda567f98b
-md"## HTML Tweaks"
+md"## Visual Tweaks"
 
 # ╔═╡ bc238aa5-05db-40bc-9ed1-cfa8dd891441
 Text("Page width and scroll bar height were increased from the default values.")
