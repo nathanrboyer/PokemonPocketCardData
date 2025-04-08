@@ -389,8 +389,14 @@ end
 	rename!(["Rarity", "Total Cards"])
 end
 
+# ╔═╡ 5b7621b1-d0da-4955-844c-fd4c31373efd
+md"## Dependency Package Loading"
+
 # ╔═╡ 9888e0c8-335a-45f7-a16f-2ffda567f98b
 md"## HTML Tweaks"
+
+# ╔═╡ bc238aa5-05db-40bc-9ed1-cfa8dd891441
+Text("Page width and scroll bar height were increased from the default values.")
 
 # ╔═╡ 0c19b482-4946-4ee4-96db-0b5fc5f6f551
 # Increase page width
@@ -413,12 +419,6 @@ pluto-output.scroll_y {
     max-height: 600px;
 }
 """
-
-# ╔═╡ bc238aa5-05db-40bc-9ed1-cfa8dd891441
-Text("Page width and scroll bar height were increased.")
-
-# ╔═╡ 5b7621b1-d0da-4955-844c-fd4c31373efd
-md"## Dependency Package Loading"
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1017,11 +1017,11 @@ version = "17.4.0+2"
 # ╟─7b2279cb-dbf4-4077-8c66-002d925b7806
 # ╟─404c6734-61d2-4dc3-839c-204a16a561d5
 # ╟─97e51f8d-91d4-4aab-a594-516b3aae6d90
-# ╟─9888e0c8-335a-45f7-a16f-2ffda567f98b
-# ╟─0c19b482-4946-4ee4-96db-0b5fc5f6f551
-# ╟─46bf0b39-6f4a-4748-bcd4-07cdb9ec3272
-# ╟─bc238aa5-05db-40bc-9ed1-cfa8dd891441
 # ╟─5b7621b1-d0da-4955-844c-fd4c31373efd
 # ╠═aa94d7a0-b24a-11ef-2de2-47a66b1c37be
+# ╟─9888e0c8-335a-45f7-a16f-2ffda567f98b
+# ╟─bc238aa5-05db-40bc-9ed1-cfa8dd891441
+# ╟─0c19b482-4946-4ee4-96db-0b5fc5f6f551
+# ╟─46bf0b39-6f4a-4748-bcd4-07cdb9ec3272
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
