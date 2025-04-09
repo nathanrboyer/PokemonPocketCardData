@@ -183,7 +183,7 @@ begin
 			"https://www.serebii.net/tcgpocket/space-timesmackdown/palkia.jpg",
 			:width => image_width,
 		),
-		"Arceus" => Resource(
+		"Triumphant Light" => Resource(
 			"https://www.serebii.net/tcgpocket/triumphantlight/arceus.jpg",
 			:width => image_width,
 		),
