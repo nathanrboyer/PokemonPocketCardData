@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.6
+# v0.20.8
 
 using Markdown
 using InteractiveUtils
@@ -54,7 +54,6 @@ A2 = [
 	82
 	92
 	109
-	123
 	125
 	129
 	197
@@ -86,6 +85,47 @@ A2b = [
 	54
 	89
 	93
+];
+
+# ╔═╡ 647797c9-0ad3-44b4-b35a-ad78dfafa60c
+md"### Celestial Guardians"
+
+# ╔═╡ 2bfa8df6-a36d-4d4e-8a87-14c8aabed144
+A3 = [
+	5
+	8
+	17
+	22
+	23
+	24
+	29
+	30
+	32
+	37
+	48
+	49
+	51
+	56
+	59
+	61
+	65
+	66
+	67
+	68
+	69
+	80
+	83
+	100
+	112
+	120
+	121
+	122
+	127
+	137
+	139
+	145
+	153
+	155
 ];
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -178,6 +218,14 @@ begin
 		),
 		"Shining Revelry" => Resource(
 			"https://www.serebii.net/tcgpocket/shiningrevelry/booster.jpg",
+			:width => image_width,
+		),
+		"Solgaleo" => Resource(
+			"https://www.serebii.net/tcgpocket/celestialguardians/solgaleo.jpg",
+			:width => image_width,
+		),
+		"Lunala" => Resource(
+			"https://www.serebii.net/tcgpocket/celestialguardians/lunala.jpg",
 			:width => image_width,
 		),
 		"PA" => Resource(
@@ -294,6 +342,7 @@ begin
 		"A2" => A2,
 		"A2a" => A2a,
 		"A2b" => A2b,
+		"A3" => A3,
 	)
 	desired_cards = filter_by_desired(card_data, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
@@ -314,6 +363,9 @@ end
 
 # ╔═╡ f659b84a-22f5-4aa9-a2c4-ece9a1175ede
 @rsubset(desired_cards, :series == "A2b").image
+
+# ╔═╡ 6f93bd90-25d8-497f-92ff-562fe614b5e5
+@rsubset(desired_cards, :series == "A3").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -979,6 +1031,9 @@ version = "17.4.0+2"
 # ╟─3cc50f07-e16c-4b0d-9799-cf61671a5e3d
 # ╠═ef199255-e146-4bc8-b2d0-accd69e97d83
 # ╟─f659b84a-22f5-4aa9-a2c4-ece9a1175ede
+# ╟─647797c9-0ad3-44b4-b35a-ad78dfafa60c
+# ╠═2bfa8df6-a36d-4d4e-8a87-14c8aabed144
+# ╟─6f93bd90-25d8-497f-92ff-562fe614b5e5
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
