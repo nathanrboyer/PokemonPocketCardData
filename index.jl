@@ -126,6 +126,12 @@ A3 = [
 	145
 	153
 	155
+	157
+	162
+	163
+	202
+	203
+	209
 ];
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -286,7 +292,7 @@ card_data = @chain begin data_download
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(card_data, contains(:name, r"blast"i))
+@rsubset(card_data, contains(:name, r"pika"i))
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
