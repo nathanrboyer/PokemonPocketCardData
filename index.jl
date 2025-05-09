@@ -94,16 +94,12 @@ A3 = [
 	8
 	17
 	22
-	23
-	24
 	30
 	32
 	37
 	48
-	49
 	51
 	56
-	59
 	61
 	65
 	66
@@ -115,12 +111,10 @@ A3 = [
 	112
 	120
 	121
-	122
 	127
 	139
 	145
 	153
-	155
 	157
 	162
 	163
@@ -296,7 +290,7 @@ end
 @rsubset(card_data, :rarity == "☆")[:, [:image, :series, :number]]
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "A2b")[:, [:image, :number]]
+@rsubset(card_data, :series == "A3")[:, [:image, :number]]
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 @rsubset(card_data, :series == "A1", :number == 280).image |> only
