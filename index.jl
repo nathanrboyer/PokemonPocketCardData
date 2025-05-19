@@ -90,7 +90,6 @@ md"### Celestial Guardians"
 
 # ╔═╡ 2bfa8df6-a36d-4d4e-8a87-14c8aabed144
 A3 = [
-	8
 	17
 	32
 	37
