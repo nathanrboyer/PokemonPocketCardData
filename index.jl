@@ -64,7 +64,6 @@ md"### Triumphant Light"
 A2a = [
 	13
 	17
-	41
 	47
 	50
 	57
