@@ -111,6 +111,14 @@ A3 = [
 	209
 ];
 
+# ╔═╡ 45a5ec15-30a3-41b7-a8b1-cc7a0a5a52d8
+md"### Extradimensional Crisis"
+
+# ╔═╡ e74b5827-8f34-43fe-a0da-4f513e6ac388
+A3a = [
+	
+];
+
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
 md"# Pack Information"
 
@@ -211,6 +219,10 @@ begin
 			"https://www.serebii.net/tcgpocket/celestialguardians/lunala.jpg",
 			:width => image_width,
 		),
+		"Extradimensional Crisis" => Resource(
+			"https://www.serebii.net/tcgpocket/extradimensionalcrisis/booster.jpg",
+			:width => image_width,
+		),
 		"PA" => Resource(
 			"https://www.serebii.net/tcgpocket/logo/promo-a.png",
 			:width => image_width,
@@ -278,7 +290,7 @@ end
 @rsubset(card_data, :rarity == "☆")[:, [:image, :series, :number]]
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "A3")[:, [:image, :number]]
+@rsubset(card_data, :series == "A3a")[:, [:image, :number]]
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 @rsubset(card_data, :series == "A1", :number == 280).image |> only
@@ -326,6 +338,7 @@ begin
 		"A2a" => A2a,
 		"A2b" => A2b,
 		"A3" => A3,
+		"A3a" => A3a,
 	)
 	desired_cards = filter_by_desired(card_data, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
@@ -1017,6 +1030,8 @@ version = "17.4.0+2"
 # ╟─647797c9-0ad3-44b4-b35a-ad78dfafa60c
 # ╠═2bfa8df6-a36d-4d4e-8a87-14c8aabed144
 # ╟─6f93bd90-25d8-497f-92ff-562fe614b5e5
+# ╟─45a5ec15-30a3-41b7-a8b1-cc7a0a5a52d8
+# ╠═e74b5827-8f34-43fe-a0da-4f513e6ac388
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
