@@ -1,6 +1,6 @@
-# Pokemon Pocket Card Data
+# Pokémon Pocket Card Data
 A [notebook](https://plutojl.org/)
-for visual filtering of [Pokemon Pocket](https://tcgpocket.pokemon.com/en-us/) card data.
+for visual filtering of [Pokémon Pocket](https://tcgpocket.pokemon.com/en-us/) card data.
 Its main function is to provide information on which card packs to open
 based on which cards you desire.
 **[CLICK HERE](https://nathanrboyer.github.io/PokemonPocketCardData/)**
