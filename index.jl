@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.8
+# v0.20.10
 
 using Markdown
 using InteractiveUtils
@@ -89,13 +89,11 @@ md"### Celestial Guardians"
 
 # ╔═╡ 2bfa8df6-a36d-4d4e-8a87-14c8aabed144
 A3 = [
-	17
 	48
 	51
 	56
 	61
 	66
-	69
 	80
 	112
 	120
@@ -114,6 +112,11 @@ md"### Extradimensional Crisis"
 
 # ╔═╡ e74b5827-8f34-43fe-a0da-4f513e6ac388
 A3a = [
+	56
+	60
+	84
+	85
+	86
 	88
 ];
 
@@ -360,6 +363,9 @@ end
 
 # ╔═╡ 6f93bd90-25d8-497f-92ff-562fe614b5e5
 @rsubset(desired_cards, :series == "A3").image
+
+# ╔═╡ 0f4bf200-6daa-4036-86b0-c8caa23f0ec2
+@rsubset(desired_cards, :series == "A3a").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -1030,6 +1036,7 @@ version = "17.4.0+2"
 # ╟─6f93bd90-25d8-497f-92ff-562fe614b5e5
 # ╟─45a5ec15-30a3-41b7-a8b1-cc7a0a5a52d8
 # ╠═e74b5827-8f34-43fe-a0da-4f513e6ac388
+# ╟─0f4bf200-6daa-4036-86b0-c8caa23f0ec2
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
