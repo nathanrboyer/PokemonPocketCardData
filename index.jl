@@ -96,6 +96,8 @@ md"### Extradimensional Crisis"
 
 # ╔═╡ e74b5827-8f34-43fe-a0da-4f513e6ac388
 A3a = [
+	42
+	44
 	56
 	84
 	85
@@ -265,7 +267,7 @@ card_data = @chain begin data_download
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(card_data, contains(:name, r"pika"i))
+@rsubset(card_data, contains(:name, r"nih"i))
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
