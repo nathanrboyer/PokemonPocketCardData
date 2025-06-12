@@ -96,9 +96,21 @@ md"### Extradimensional Crisis"
 
 # ╔═╡ e74b5827-8f34-43fe-a0da-4f513e6ac388
 A3a = [
+	4
+	6
+	19
+	21
+	22
+	28
+	31
+	33
+	38
 	42
-	44
-	56
+	43
+	62
+	63
+	65
+	69
 	84
 	85
 	86
@@ -267,7 +279,10 @@ card_data = @chain begin data_download
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(card_data, contains(:name, r"nih"i))
+@rsubset(card_data, contains(:name, r"pika"i))
+
+# ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
+@rsubset(card_data, :series == "A1", :number == 280).image |> only
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
@@ -277,9 +292,6 @@ end
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
 @rsubset(card_data, :series == "A3a")[:, [:image, :number]]
-
-# ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(card_data, :series == "A1", :number == 280).image |> only
 
 # ╔═╡ f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
 seriespacks = let gdf = groupby(card_data, :series)
@@ -1029,10 +1041,10 @@ version = "17.4.0+2"
 # ╟─86e7000b-3675-4703-8819-470f793c2d69
 # ╟─6ae9d1a2-3733-40e2-ba0e-6a563cb76ae7
 # ╠═c3c0fa78-d354-42d0-9490-c8572b305f74
+# ╠═762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 # ╠═2916685d-07b4-4fce-822a-c42ec8f8605c
 # ╠═dd81ee04-72ca-4a2b-aa9a-24c9a91dbf7c
 # ╠═684d49af-05c5-4fae-84c0-33867f619371
-# ╠═762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 # ╟─53835b1f-c7e4-47ee-a36f-4adcd2a34182
 # ╟─7079b6c8-bee9-4e5f-a62a-f0e0617b7225
 # ╟─7284ca8c-09e5-44ab-98de-db8d2e56053d
