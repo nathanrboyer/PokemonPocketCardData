@@ -98,15 +98,9 @@ md"### Extradimensional Crisis"
 A3a = [
 	6
 	19
-	21
-	28
-	31
 	33
-	38
 	43
 	62
-	65
-	84
 	86
 	88
 ];
