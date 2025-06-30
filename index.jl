@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.10
+# v0.20.13
 
 using Markdown
 using InteractiveUtils
@@ -58,9 +58,9 @@ md"### Triumphant Light"
 A2a = [
 	13
 	17
-	47
 	57
 	71
+	93
 ];
 
 # ╔═╡ 3cc50f07-e16c-4b0d-9799-cf61671a5e3d
@@ -97,10 +97,24 @@ md"### Extradimensional Crisis"
 # ╔═╡ e74b5827-8f34-43fe-a0da-4f513e6ac388
 A3a = [
 	6
-	19
 	62
-	86
 	88
+];
+
+# ╔═╡ da7c71ce-e6b7-40db-b2bc-50fbf0b59c1f
+md"### Eevee Grove"
+
+# ╔═╡ d890bce7-bbcc-4f4c-8d00-8922b04c8b15
+A3b = [
+	5
+	50
+	51
+	52
+	53
+	67
+	90
+	91
+	92
 ];
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -207,6 +221,10 @@ begin
 			"https://www.serebii.net/tcgpocket/extradimensionalcrisis/booster.jpg",
 			:width => image_width,
 		),
+		"Eevee Grove" => Resource(
+			"https://www.serebii.net/tcgpocket/eeveegrove/booster.jpg",
+			:width => image_width,
+		),
 		"PA" => Resource(
 			"https://www.serebii.net/tcgpocket/logo/promo-a.png",
 			:width => image_width,
@@ -268,7 +286,7 @@ end
 @rsubset(card_data, contains(:name, r"pika"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(card_data, :series == "A1", :number == 280).image |> only
+@rsubset(card_data, :series == "A2a", :number == 93).image |> only
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
@@ -277,7 +295,7 @@ end
 @rsubset(card_data, :rarity == "☆")[:, [:image, :series, :number]]
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "A3a")[:, [:image, :number]]
+@rsubset(card_data, :series == "A3b")[:, [:image, :number]]
 
 # ╔═╡ f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
 seriespacks = let gdf = groupby(card_data, :series)
@@ -323,6 +341,7 @@ begin
 		"A2b" => A2b,
 		"A3" => A3,
 		"A3a" => A3a,
+		"A3b" => A3b,
 	)
 	desired_cards = filter_by_desired(card_data, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
@@ -349,6 +368,9 @@ end
 
 # ╔═╡ 0f4bf200-6daa-4036-86b0-c8caa23f0ec2
 @rsubset(desired_cards, :series == "A3a").image
+
+# ╔═╡ 030f56ad-6a21-4bcb-aba5-d8ac9b2736b6
+@rsubset(desired_cards, :series == "A3b").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -1020,6 +1042,9 @@ version = "17.4.0+2"
 # ╟─45a5ec15-30a3-41b7-a8b1-cc7a0a5a52d8
 # ╠═e74b5827-8f34-43fe-a0da-4f513e6ac388
 # ╟─0f4bf200-6daa-4036-86b0-c8caa23f0ec2
+# ╟─da7c71ce-e6b7-40db-b2bc-50fbf0b59c1f
+# ╠═d890bce7-bbcc-4f4c-8d00-8922b04c8b15
+# ╟─030f56ad-6a21-4bcb-aba5-d8ac9b2736b6
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
