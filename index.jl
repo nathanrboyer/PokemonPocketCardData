@@ -109,7 +109,6 @@ A3b = [
 	15
 	24
 	28
-	32
 	34
 	52
 	53
@@ -383,22 +382,22 @@ end
 		:image => (x -> [copy(x)]),
 		nrow,
 		renamecols = false,
-	)
+	)  # rarities by pack
 	sort!(:rarity)
-	unstack(:rarity, :nrow, fill=0)
+	unstack(:rarity, :nrow, fill=0)  # create rarity columns
 	groupby(:pack)
 	combine(
 		:image => (x -> [reduce(vcat, x)]),
 		Not(:pack, :image) .=> sum,
 		renamecols = false,
-	)
-	transform!(Not(:pack, :image) => (+) => :total)
+	)  # combine rarities in the same pack
+	transform!(Not(:pack, :image) => (+) => :total)  # add total column
 	select!(
 		:pack => ByRow(x -> pack_images[x]) => "Pack",
 		:image => "Desired Cards",
 		:total => "Total",
 		Not(:pack, :image, :total),
-	)
+	)  # add pack images and column headers
 	sort!("Total", rev=true)
 end
 
