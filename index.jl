@@ -103,17 +103,14 @@ md"### Eevee Grove"
 
 # ╔═╡ d890bce7-bbcc-4f4c-8d00-8922b04c8b15
 A3b = [
-	1
 	2
 	13
 	15
 	24
 	28
 	34
-	52
 	53
 	57
-	68
 	75
 	90
 	91
@@ -488,7 +485,7 @@ PlutoUI = "~0.7.62"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.5"
+julia_version = "1.11.6"
 manifest_format = "2.0"
 project_hash = "425bf9f972c15446a3cc2db07b7072092e6acbbd"
 
