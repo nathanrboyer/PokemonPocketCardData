@@ -103,8 +103,6 @@ md"### Eevee Grove"
 
 # ╔═╡ d890bce7-bbcc-4f4c-8d00-8922b04c8b15
 A3b = [
-	2
-	13
 	15
 	24
 	28
