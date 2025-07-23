@@ -24,11 +24,18 @@ md"### Genetic Apex"
 # ╔═╡ 4b18f32c-4621-4474-bf3f-808ec2b4fe1f
 A1 = [
 	41
-	45
 	125
 	203
+	262
 	267
+	273
+	274
 	275
+	276
+	277
+	280
+	281
+	282
 ];
 
 # ╔═╡ 89d6ecd9-1185-47c9-b0ad-fcbc2d8b7941
@@ -37,6 +44,7 @@ md"### Mythical Island"
 # ╔═╡ 1c594f1f-5119-4e65-b873-9a98de628d7e
 A1a = [
 	72
+	82
 	84
 ];
 
@@ -47,7 +55,7 @@ md"### Space-Time Smackdown"
 A2 = [
 	79
 	92
-	125
+	190
 	197
 ];
 
@@ -59,7 +67,9 @@ A2a = [
 	13
 	17
 	57
+	87
 	93
+	95
 ];
 
 # ╔═╡ 3cc50f07-e16c-4b0d-9799-cf61671a5e3d
@@ -276,7 +286,7 @@ card_data = @chain begin data_download
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(card_data, contains(:name, r"pika"i))
+@rsubset(card_data, contains(:name, r"eev"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 @rsubset(card_data, :series == "A2a", :number == 93).image |> only
@@ -284,8 +294,8 @@ end
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
 
-# ╔═╡ dd81ee04-72ca-4a2b-aa9a-24c9a91dbf7c
-@rsubset(card_data, :rarity == "☆")[:, [:image, :series, :number]]
+# ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
+@rsubset(card_data, :rarity == "☆☆☆")[:, [:image, :series, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
 @rsubset(card_data, :series == "A3b")[:, [:image, :number]]
@@ -1046,9 +1056,9 @@ version = "17.4.0+2"
 # ╟─6ae9d1a2-3733-40e2-ba0e-6a563cb76ae7
 # ╠═c3c0fa78-d354-42d0-9490-c8572b305f74
 # ╠═762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-# ╠═2916685d-07b4-4fce-822a-c42ec8f8605c
-# ╠═dd81ee04-72ca-4a2b-aa9a-24c9a91dbf7c
+# ╠═5a7f7ec0-67e4-424b-9a1c-03cf870d735b
 # ╠═684d49af-05c5-4fae-84c0-33867f619371
+# ╠═2916685d-07b4-4fce-822a-c42ec8f8605c
 # ╟─53835b1f-c7e4-47ee-a36f-4adcd2a34182
 # ╟─7079b6c8-bee9-4e5f-a62a-f0e0617b7225
 # ╟─7284ca8c-09e5-44ab-98de-db8d2e56053d
