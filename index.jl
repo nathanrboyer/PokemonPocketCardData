@@ -23,9 +23,8 @@ md"### Genetic Apex"
 
 # ╔═╡ 4b18f32c-4621-4474-bf3f-808ec2b4fe1f
 A1 = [
-	41
 	125
-	203
+	254
 	262
 	267
 	273
@@ -291,14 +290,14 @@ end
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 @rsubset(card_data, :series == "A2a", :number == 93).image |> only
 
-# ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
-@rsubset(card_data, :health ≥ 180).image
-
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
 @rsubset(card_data, :rarity == "☆☆☆")[:, [:image, :series, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
 @rsubset(card_data, :series == "A3b")[:, [:image, :number]]
+
+# ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
+@rsubset(card_data, :health ≥ 180).image
 
 # ╔═╡ f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
 seriespacks = let gdf = groupby(card_data, :series)
