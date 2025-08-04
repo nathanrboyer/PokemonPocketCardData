@@ -61,8 +61,6 @@ md"### Triumphant Light"
 
 # ╔═╡ 31d599a7-e4d8-4c64-bb68-de6246325213
 A2a = [
-	17
-	57
 	87
 	93
 	95
@@ -73,8 +71,6 @@ md"### Shining Revelry"
 
 # ╔═╡ ef199255-e146-4bc8-b2d0-accd69e97d83
 A2b = [
-	10
-	22
 	54
 	89
 ];
@@ -84,9 +80,7 @@ md"### Celestial Guardians"
 
 # ╔═╡ 2bfa8df6-a36d-4d4e-8a87-14c8aabed144
 A3 = [
-	48
 	51
-	127
 	157
 	162
 	163
@@ -108,12 +102,19 @@ md"### Eevee Grove"
 
 # ╔═╡ d890bce7-bbcc-4f4c-8d00-8922b04c8b15
 A3b = [
-	24
-	53
 	89
 	90
 	91
 	92
+];
+
+# ╔═╡ 03550662-ee38-4879-9a63-8380880dcc8f
+md"### Wisdom of Sea and Sky"
+
+# ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
+A4 = [
+	203
+	204
 ];
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -176,6 +177,10 @@ Pack images are scraped from [serebii.net](https://www.serebii.net/tcgpocket).
 begin
 	image_width = 60
 	pack_images = Dict(
+		"PA" => Resource(
+			"https://www.serebii.net/tcgpocket/logo/promo-a.png",
+			:width => image_width,
+		),
 		"Charizard" => Resource(
 			"https://www.serebii.net/tcgpocket/geneticapex/charizard.jpg",
 			:width =>image_width,
@@ -200,7 +205,7 @@ begin
 			"https://www.serebii.net/tcgpocket/space-timesmackdown/palkia.jpg",
 			:width => image_width,
 		),
-		"Triumphant Light" => Resource(
+		"Arceus" => Resource(
 			"https://www.serebii.net/tcgpocket/triumphantlight/arceus.jpg",
 			:width => image_width,
 		),
@@ -224,10 +229,14 @@ begin
 			"https://www.serebii.net/tcgpocket/eeveegrove/booster.jpg",
 			:width => image_width,
 		),
-		"PA" => Resource(
-			"https://www.serebii.net/tcgpocket/logo/promo-a.png",
+		"Ho-Oh" => Resource(
+			"https://www.serebii.net/tcgpocket/wisdomofseaandsky/ho-oh.jpg",
 			:width => image_width,
-		)
+		),
+		"Lugia" => Resource(
+			"https://www.serebii.net/tcgpocket/wisdomofseaandsky/lugia.jpg",
+			:width => image_width,
+		),
 	)
 end
 
@@ -291,7 +300,7 @@ end
 @rsubset(card_data, :rarity == "☆☆☆")[:, [:image, :series, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "A3b")[:, [:image, :number]]
+@rsubset(card_data, :series == "A4")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
@@ -341,6 +350,7 @@ begin
 		"A3" => A3,
 		"A3a" => A3a,
 		"A3b" => A3b,
+		"A4" => A4,
 	)
 	desired_cards = filter_by_desired(card_data, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
@@ -370,6 +380,9 @@ end
 
 # ╔═╡ 030f56ad-6a21-4bcb-aba5-d8ac9b2736b6
 @rsubset(desired_cards, :series == "A3b").image
+
+# ╔═╡ 764efb07-7619-4ea5-974e-cd36d892e90e
+@rsubset(desired_cards, :series == "A4").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -1044,6 +1057,9 @@ version = "17.4.0+2"
 # ╟─da7c71ce-e6b7-40db-b2bc-50fbf0b59c1f
 # ╠═d890bce7-bbcc-4f4c-8d00-8922b04c8b15
 # ╟─030f56ad-6a21-4bcb-aba5-d8ac9b2736b6
+# ╟─03550662-ee38-4879-9a63-8380880dcc8f
+# ╠═7deeda72-a210-4f92-a059-da6bf63c98f5
+# ╟─764efb07-7619-4ea5-974e-cd36d892e90e
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
