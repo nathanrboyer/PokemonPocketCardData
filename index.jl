@@ -71,7 +71,6 @@ md"### Shining Revelry"
 
 # ╔═╡ ef199255-e146-4bc8-b2d0-accd69e97d83
 A2b = [
-	54
 	89
 ];
 
@@ -82,7 +81,6 @@ md"### Celestial Guardians"
 A3 = [
 	51
 	157
-	162
 	163
 	202
 	203
@@ -113,6 +111,8 @@ md"### Wisdom of Sea and Sky"
 
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
+	164
+	172
 	203
 	204
 ];
@@ -291,7 +291,7 @@ card_data = @chain begin data_download
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(card_data, contains(:name, r"eev"i))
+@rsubset(card_data, contains(:name, r"pika"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 @rsubset(card_data, :series == "A2a", :number == 93).image |> only
