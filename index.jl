@@ -112,28 +112,31 @@ md"### Wisdom of Sea and Sky"
 A4 = [
 	15
 	29
-	34
-	47
-	48
-	71
 	74
-	100
 	101
-	104
-	107
 	109
-	112
 	119
 	123
-	151
 	153
-	156
 	157
-	160
 	172
 	176
-	187
 	204
+];
+
+# ╔═╡ 2cc2b217-e0d2-445b-b9ee-aaa16964621f
+md"### Secluded Springs"
+
+# ╔═╡ 0498932c-95fd-4b70-a10b-1cf32ae1390a
+A4a = [
+	10
+	20
+	25
+	36
+	50
+	55
+	68
+	70
 ];
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -256,6 +259,10 @@ begin
 			"https://www.serebii.net/tcgpocket/wisdomofseaandsky/lugia.jpg",
 			:width => image_width,
 		),
+		"Secluded Springs" => Resource(
+			"https://www.serebii.net/tcgpocket/secludedsprings/booster.jpg",
+			:width => image_width,
+		),
 	)
 end
 
@@ -319,7 +326,7 @@ end
 @rsubset(card_data, :rarity == "☆☆☆")[:, [:image, :series, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "A4")[:, [:image, :number]]
+@rsubset(card_data, :series == "A4a")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
@@ -370,6 +377,7 @@ begin
 		"A3a" => A3a,
 		"A3b" => A3b,
 		"A4" => A4,
+		"A4a" => A4a,
 	)
 	desired_cards = filter_by_desired(card_data, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
@@ -402,6 +410,9 @@ end
 
 # ╔═╡ 764efb07-7619-4ea5-974e-cd36d892e90e
 @rsubset(desired_cards, :series == "A4").image
+
+# ╔═╡ 14216bf3-d98c-4d0f-bd6f-d65318ef3aad
+@rsubset(desired_cards, :series == "A4a").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -1076,9 +1087,12 @@ version = "17.4.0+2"
 # ╟─da7c71ce-e6b7-40db-b2bc-50fbf0b59c1f
 # ╠═d890bce7-bbcc-4f4c-8d00-8922b04c8b15
 # ╟─030f56ad-6a21-4bcb-aba5-d8ac9b2736b6
-# ╟─03550662-ee38-4879-9a63-8380880dcc8f
+# ╠═03550662-ee38-4879-9a63-8380880dcc8f
 # ╠═7deeda72-a210-4f92-a059-da6bf63c98f5
 # ╟─764efb07-7619-4ea5-974e-cd36d892e90e
+# ╟─2cc2b217-e0d2-445b-b9ee-aaa16964621f
+# ╠═0498932c-95fd-4b70-a10b-1cf32ae1390a
+# ╟─14216bf3-d98c-4d0f-bd6f-d65318ef3aad
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
