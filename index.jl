@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.13
+# v0.20.18
 
 using Markdown
 using InteractiveUtils
@@ -108,21 +108,15 @@ md"### Wisdom of Sea and Sky"
 
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
-	10
 	15
 	21
 	26
-	29
 	40
-	57
 	59
-	70
-	74
 	84
 	101
 	109
 	119
-	153
 	176
 	204
 ];
@@ -529,7 +523,7 @@ PlutoUI = "~0.7.62"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.6"
+julia_version = "1.11.7"
 manifest_format = "2.0"
 project_hash = "425bf9f972c15446a3cc2db07b7072092e6acbbd"
 
