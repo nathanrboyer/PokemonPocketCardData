@@ -106,9 +106,6 @@ md"### Wisdom of Sea and Sky"
 
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
-	15
-	21
-	26
 	40
 	59
 	84
@@ -123,11 +120,32 @@ md"### Secluded Springs"
 
 # ╔═╡ 0498932c-95fd-4b70-a10b-1cf32ae1390a
 A4a = [
-	5
 	20
-	31
-	36
 	42
+];
+
+# ╔═╡ 36ddd671-212d-4e2d-816e-8ca32a0528ee
+md"### Deluxe Pack: ex"
+
+# ╔═╡ 4e04ba71-26c0-4d99-b04a-37550daf8a0a
+A4b = [
+	10
+	44
+	63
+	124
+	142
+	177
+	193
+	197
+	202
+	209
+	232
+	266
+	354
+	355
+	356
+	357
+	373
 ];
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -254,6 +272,10 @@ begin
 			"https://www.serebii.net/tcgpocket/secludedsprings/booster.jpg",
 			:width => image_width,
 		),
+		"Deluxe Pack: ex" => Resource(
+			"https://www.serebii.net/tcgpocket/deluxepackex/booster.jpg",
+			:width => image_width,
+		),
 	)
 end
 
@@ -314,10 +336,10 @@ end
 @rsubset(card_data, :series == "A2a", :number == 93).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
-@rsubset(card_data, :rarity == "☆☆☆")[:, [:image, :series, :number]] |> reverse
+@rsubset(card_data, :rarity == "☆☆")[:, [:image, :series, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "A4a")[:, [:image, :number]]
+@rsubset(card_data, :series == "A4b")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
@@ -369,6 +391,7 @@ begin
 		"A3b" => A3b,
 		"A4" => A4,
 		"A4a" => A4a,
+		"A4b" => A4b,
 	)
 	desired_cards = filter_by_desired(card_data, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
@@ -404,6 +427,9 @@ end
 
 # ╔═╡ 14216bf3-d98c-4d0f-bd6f-d65318ef3aad
 @rsubset(desired_cards, :series == "A4a").image
+
+# ╔═╡ 1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
+@rsubset(desired_cards, :series == "A4b").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -835,9 +861,9 @@ version = "1.4.3"
 
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "9216a80ff3682833ac4b733caa8c00390620ba5d"
+git-tree-sha1 = "87510f7292a2b21aeff97912b0898f9553cc5c2c"
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "3.5.0+0"
+version = "3.5.1+0"
 
 [[deps.OrderedCollections]]
 git-tree-sha1 = "cc4054e898b852042d7b503313f7ad03de99c3dd"
@@ -1084,6 +1110,9 @@ version = "17.4.0+2"
 # ╟─2cc2b217-e0d2-445b-b9ee-aaa16964621f
 # ╠═0498932c-95fd-4b70-a10b-1cf32ae1390a
 # ╟─14216bf3-d98c-4d0f-bd6f-d65318ef3aad
+# ╟─36ddd671-212d-4e2d-816e-8ca32a0528ee
+# ╠═4e04ba71-26c0-4d99-b04a-37550daf8a0a
+# ╟─1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
