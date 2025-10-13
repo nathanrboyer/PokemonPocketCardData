@@ -77,8 +77,6 @@ md"### Celestial Guardians"
 
 # ╔═╡ 2bfa8df6-a36d-4d4e-8a87-14c8aabed144
 A3 = [
-	202
-	203
 	209
 ];
 
@@ -98,7 +96,6 @@ A3b = [
 	89
 	90
 	91
-	92
 ];
 
 # ╔═╡ 03550662-ee38-4879-9a63-8380880dcc8f
@@ -107,12 +104,9 @@ md"### Wisdom of Sea and Sky"
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
 	40
-	59
 	84
 	101
-	109
 	176
-	204
 ];
 
 # ╔═╡ 2cc2b217-e0d2-445b-b9ee-aaa16964621f
@@ -121,7 +115,6 @@ md"### Secluded Springs"
 # ╔═╡ 0498932c-95fd-4b70-a10b-1cf32ae1390a
 A4a = [
 	20
-	42
 ];
 
 # ╔═╡ 36ddd671-212d-4e2d-816e-8ca32a0528ee
@@ -129,20 +122,11 @@ md"### Deluxe Pack: ex"
 
 # ╔═╡ 4e04ba71-26c0-4d99-b04a-37550daf8a0a
 A4b = [
-	10
 	63
-	124
 	177
-	193
-	197
-	209
-	222
-	232
 	266
-	296
 	355
 	356
-	357
 	373
 ];
 
@@ -334,7 +318,7 @@ end
 @rsubset(card_data, :series == "A2a", :number == 93).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
-@rsubset(card_data, :rarity == "☆☆")[:, [:image, :series, :number]] |> reverse
+@rsubset(card_data, :rarity == "☆☆☆")[:, [:image, :series, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
 @rsubset(card_data, :series == "A4b")[:, [:image, :number]]
