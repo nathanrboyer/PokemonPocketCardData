@@ -72,6 +72,7 @@ md"### Shining Revelry"
 A2b = [
 	89
 	90
+	111
 ];
 
 # ╔═╡ 647797c9-0ad3-44b4-b35a-ad78dfafa60c
@@ -88,6 +89,7 @@ md"### Extradimensional Crisis"
 # ╔═╡ e74b5827-8f34-43fe-a0da-4f513e6ac388
 A3a = [
 	88
+	103
 ];
 
 # ╔═╡ da7c71ce-e6b7-40db-b2bc-50fbf0b59c1f
@@ -125,7 +127,11 @@ md"### Deluxe Pack: ex"
 A4b = [
 	355
 	356
+	365
+	370
+	372
 	373
+	379
 ];
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -319,7 +325,7 @@ end
 @rsubset(card_data, :rarity == "☆☆☆")[:, [:image, :series, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "A4b")[:, [:image, :number]]
+@rsubset(card_data, :series == "A4b")[:, [:image, :number]] |> reverse
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
