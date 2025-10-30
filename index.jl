@@ -134,6 +134,17 @@ A4b = [
 	379
 ];
 
+# ╔═╡ c7452d22-8045-44d5-ae5b-be375f8f2fe0
+md"### Mega Rising"
+
+# ╔═╡ d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
+B1 = [
+	230
+	272
+	279
+	304
+];
+
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
 md"# Pack Information"
 
@@ -262,6 +273,18 @@ begin
 			"https://www.serebii.net/tcgpocket/deluxepackex/booster.jpg",
 			:width => image_width,
 		),
+		"Mega Altaria" => Resource(
+			"https://www.serebii.net/tcgpocket/megarising/megaaltaria.jpg",
+			:width => image_width,
+		),
+		"Mega Blaziken" => Resource(
+			"https://www.serebii.net/tcgpocket/megarising/megablaziken.jpg",
+			:width => image_width,
+		),
+		"Mega Gyarados" => Resource(
+			"https://www.serebii.net/tcgpocket/megarising/megagyarados.jpg",
+			:width => image_width,
+		),
 	)
 end
 
@@ -322,10 +345,10 @@ end
 @rsubset(card_data, :series == "A2a", :number == 93).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
-@rsubset(card_data, :rarity == "☆☆☆")[:, [:image, :series, :number]] |> reverse
+@rsubset(card_data, :rarity == "☆")[:, [:image, :series, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "A4b")[:, [:image, :number]] |> reverse
+@rsubset(card_data, :series == "B1")[:, [:image, :number]] |> reverse
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
@@ -378,6 +401,7 @@ begin
 		"A4" => A4,
 		"A4a" => A4a,
 		"A4b" => A4b,
+		"B1" => B1,
 	)
 	desired_cards = filter_by_desired(card_data, desired_card_numbers)
 	desired_cards_unpacked = unpack_shared(desired_cards)
@@ -416,6 +440,9 @@ end
 
 # ╔═╡ 1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
 @rsubset(desired_cards, :series == "A4b").image
+
+# ╔═╡ e6eb9f63-7eda-4e94-bc0b-700121f13ea0
+@rsubset(desired_cards, :series == "B1").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -1099,6 +1126,9 @@ version = "17.4.0+2"
 # ╟─36ddd671-212d-4e2d-816e-8ca32a0528ee
 # ╠═4e04ba71-26c0-4d99-b04a-37550daf8a0a
 # ╟─1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
+# ╟─c7452d22-8045-44d5-ae5b-be375f8f2fe0
+# ╠═d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
+# ╟─e6eb9f63-7eda-4e94-bc0b-700121f13ea0
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
