@@ -13,10 +13,18 @@ md"# Desired Cards"
 
 # ╔═╡ 34436b8a-b8ad-4875-bf99-86b8f8b2a695
 md"""
-Use this section to enter the card numbers you desire in each series.
+Use this section to enter the card numbers you desire in each expansion.
 
 This data will be used to filter the database and sort it by number of desired cards per pack.
 """
+
+# ╔═╡ c22b8b8e-f178-425c-8882-da6ace3626f6
+md"### Promo A"
+
+# ╔═╡ a1d06a4c-1e18-4dcd-b5d4-8c8a558000d1
+PA = [
+	1
+];
 
 # ╔═╡ 238c0262-3734-4bc6-94ee-b907d91f47a0
 md"### Genetic Apex"
@@ -108,8 +116,6 @@ md"### Wisdom of Sea and Sky"
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
 	40
-	101
-	176
 ];
 
 # ╔═╡ 2cc2b217-e0d2-445b-b9ee-aaa16964621f
@@ -125,13 +131,19 @@ md"### Deluxe Pack: ex"
 
 # ╔═╡ 4e04ba71-26c0-4d99-b04a-37550daf8a0a
 A4b = [
-	355
-	356
 	365
 	370
 	372
 	373
 	379
+];
+
+# ╔═╡ 05544a2f-15d5-4d77-a786-a72b3f35e4fb
+md"### Promo B"
+
+# ╔═╡ 0d3091f8-d2e2-4cd9-84fe-c1a16cc4c76d
+PB = [
+	1
 ];
 
 # ╔═╡ c7452d22-8045-44d5-ae5b-be375f8f2fe0
@@ -176,7 +188,7 @@ md"## Function Definitions"
 	filter_by_desired(source, desired)
 
 Filter `source` dataframe by a dictionary of `desired` cards.
-Each key in the dictionary corresponds to a card `:series`,
+Each key in the dictionary corresponds to a card `:expansion`,
 and each value in the dictionary is a vector of card `:numbers`.
 """
 function filter_by_desired(
@@ -185,10 +197,10 @@ function filter_by_desired(
 	)
 	vec = DataFrame[]
 	for (key,value) in pairs(desired)
-		push!(vec, @rsubset(source, :series == key, :number in value))
+		push!(vec, @rsubset(source, :expansion == key, :number in value))
 	end
 	df = reduce(vcat, vec)
-	sort!(df, [:series, :number])
+	sort!(df, [:expansion, :number])
 end
 
 # ╔═╡ c16d8096-8c8d-4487-8ad5-50bc43a5205d
@@ -196,102 +208,13 @@ md"## Data Scraping"
 
 # ╔═╡ de7fcd25-b476-4e50-a649-370a08b3d5df
 md"""
-Card data is scraped from [Chase Manning's Github repository](https://github.com/chase-manning/pokemon-tcg-pocket-cards).
-
-Pack images are scraped from [serebii.net](https://www.serebii.net/tcgpocket).
+Card and pack data is scraped from [Chase Manning's Github repository](https://github.com/chase-manning/pokemon-tcg-pocket-cards).
 """
-
-# ╔═╡ e0de3c3d-4a10-4da3-a3a6-8783543fe0c0
-begin
-	image_width = 60
-	pack_images = Dict(
-		"PA" => Resource(
-			"https://www.serebii.net/tcgpocket/logo/promo-a.png",
-			:width => image_width,
-		),
-		"Charizard" => Resource(
-			"https://www.serebii.net/tcgpocket/geneticapex/charizard.jpg",
-			:width =>image_width,
-		),
-		"Pikachu" => Resource(
-			"https://www.serebii.net/tcgpocket/geneticapex/pikachu.jpg",
-			:width => image_width,
-		),
-		"Mewtwo" => Resource(
-			"https://www.serebii.net/tcgpocket/geneticapex/mewtwo.jpg",
-			:width => image_width,
-		),
-		"Mythical Island" => Resource(
-			"https://www.serebii.net/tcgpocket/mythicalisland/mew.jpg",
-			:width => image_width,
-		),
-		"Dialga" => Resource(
-			"https://www.serebii.net/tcgpocket/space-timesmackdown/dialga.jpg",
-			:width => image_width,
-		),
-		"Palkia" => Resource(
-			"https://www.serebii.net/tcgpocket/space-timesmackdown/palkia.jpg",
-			:width => image_width,
-		),
-		"Arceus" => Resource(
-			"https://www.serebii.net/tcgpocket/triumphantlight/arceus.jpg",
-			:width => image_width,
-		),
-		"Shining Revelry" => Resource(
-			"https://www.serebii.net/tcgpocket/shiningrevelry/booster.jpg",
-			:width => image_width,
-		),
-		"Solgaleo" => Resource(
-			"https://www.serebii.net/tcgpocket/celestialguardians/solgaleo.jpg",
-			:width => image_width,
-		),
-		"Lunala" => Resource(
-			"https://www.serebii.net/tcgpocket/celestialguardians/lunala.jpg",
-			:width => image_width,
-		),
-		"Extradimensional Crisis" => Resource(
-			"https://www.serebii.net/tcgpocket/extradimensionalcrisis/booster.jpg",
-			:width => image_width,
-		),
-		"Eevee Grove" => Resource(
-			"https://www.serebii.net/tcgpocket/eeveegrove/booster.jpg",
-			:width => image_width,
-		),
-		"Ho-Oh" => Resource(
-			"https://www.serebii.net/tcgpocket/wisdomofseaandsky/ho-oh.jpg",
-			:width => image_width,
-		),
-		"Lugia" => Resource(
-			"https://www.serebii.net/tcgpocket/wisdomofseaandsky/lugia.jpg",
-			:width => image_width,
-		),
-		"Secluded Springs" => Resource(
-			"https://www.serebii.net/tcgpocket/secludedsprings/booster.jpg",
-			:width => image_width,
-		),
-		"Deluxe Pack: ex" => Resource(
-			"https://www.serebii.net/tcgpocket/deluxepackex/booster.jpg",
-			:width => image_width,
-		),
-		"Mega Altaria" => Resource(
-			"https://www.serebii.net/tcgpocket/megarising/megaaltaria.jpg",
-			:width => image_width,
-		),
-		"Mega Blaziken" => Resource(
-			"https://www.serebii.net/tcgpocket/megarising/megablaziken.jpg",
-			:width => image_width,
-		),
-		"Mega Gyarados" => Resource(
-			"https://www.serebii.net/tcgpocket/megarising/megagyarados.jpg",
-			:width => image_width,
-		),
-	)
-end
 
 # ╔═╡ d9d35c7c-311d-4ae1-8737-80ff3500744a
 begin
 	repo_version = "v4"
-	website_response = HTTP.request(
+	website_response1 = HTTP.request(
 		"GET",
 		join([
 			"https://raw.githubusercontent.com/chase-manning/",
@@ -300,7 +223,12 @@ begin
 			".json",
 		]),
 	)
-	data_download = website_response.body |> jsontable |> DataFrame
+	card_data_download = website_response1.body |> jsontable |> DataFrame
+	website_response2 = HTTP.request(
+		"GET",
+		"https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/expansions.json",
+	)
+	expansion_data_download = website_response2.body |> jsontable |> DataFrame
 	alternate_sources = md"""
 		If this stops working, some other potential sources for Pokémon data are listed below.
 
@@ -320,48 +248,65 @@ end
 # ╔═╡ bdd147b1-3e4b-4c63-a11c-462c1e90c612
 md"## Data Cleaning"
 
-# ╔═╡ b7486cfa-fc49-4cde-993e-78d6d5768db0
-card_data = @chain begin data_download
-	@rselect(
-		$[:series, :number] = split(:id, '-'),
-		$(Not(:id)),
+# ╔═╡ fcb064ab-b4ca-4898-951d-7fd623d6c8ac
+expansion_data = @chain expansion_data_download begin
+	@aside image_width = 60
+	transform(:packs => ByRow(jsontable) => :packs)
+	flatten(:packs)
+	select!(
+		:id => identity => :expansionid,
+		:name => identity => :expansionname,
+		:packs => ByRow(NamedTuple) => [:packid, :packname, :packimage],
 	)
-	@rtransform! :series =
-		if length(:series) == 3
-			uppercase(:series[1]) * uppercase(:series[2]) * lowercase(:series[3])
-		else
-			uppercase(:series)
-		end
-	@rtransform! :number = parse(Int, :number)
-	@rtransform! :image = Resource(:image)
-	@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
-	@transform! :health = passmissing(parse).(Int, replace(:health, "" => missing))
+	transform!(:packimage => ByRow(x -> Resource(x, :width => image_width)), renamecols=false)
 end
+
+# ╔═╡ 2f5f869e-3418-4aca-9b47-76ca72a64425
+@rsubset card_data_download occursin("Promo", :pack)
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
 @rsubset(card_data, contains(:name, r"pika"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(card_data, :series == "A2a", :number == 93).image |> only
+@rsubset(card_data, :expansion == "A2a", :number == 93).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
-@rsubset(card_data, :rarity == "☆")[:, [:image, :series, :number]] |> reverse
+@rsubset(card_data, :rarity == "☆")[:, [:image, :expansion, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :series == "B1")[:, [:image, :number]] |> reverse
+@rsubset(card_data, :expansion == "B1")[:, [:image, :number]] |> reverse
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(card_data, :health ≥ 180).image
 
+# ╔═╡ cb34c847-da1c-47d4-99bd-5522a55cb3fb
+data = @chain begin outerjoin(card_data, expansion_data, on=:packid, order=:left, makeunique=true)
+end
+
+# ╔═╡ 34f7cfaa-fbd8-4d2a-a00c-354065a2e642
+md"""
+## TODO:
+1. Rearrange and rename columns
+2. Fix missings and Promo inconsistencies.
+3. Rename `series` to `expansion` everywhere.
+4. Fix desired sorting to use new dataframe instead of separate dict.
+5. Automate input headers and dict conversions.
+"""
+
 # ╔═╡ f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
-seriespacks = let gdf = groupby(card_data, :series)
+expansionpacks = let gdf = groupby(card_data, :expansion)
 	d = Dict{String,Vector{String}}()
 	for (key, df) in pairs(gdf)
-		packs = unique(df.pack)
+		packs = unique(df.packname)
 		filter!(!(==("Every")), packs)
-		push!(d, key.series => packs)
+		push!(d, key.expansion => packs)
 	end
 	filter!.(!contains("Shared"), values(d))
+	for (key, value) in pairs(d)
+		if isempty(value)
+			d[key] = ["Booster"]
+		end
+	end
 	d
 end
 
@@ -374,22 +319,23 @@ Convert rows with a "Shared(<series_name>)" pack value into multiple rows with s
 function unpack_shared(df_original)
 	df = copy(df_original)
 	for row in eachrow(df)
-		if contains(row.pack, "Shared")
-			for packname in seriespacks[row.series]
+		if contains(row.packname, "Shared")
+			for p in expansionpacks[row.expansion]
 				newrow = copy(row)
-				newrow = (newrow..., pack = packname)
+				newrow = (newrow..., packname = p)
 				push!(df, newrow)
 			end
 		end
 	end
-	@rsubset!(df, !contains(:pack, "Shared"))
-	sort!(df, [:series, :number])
+	@rsubset!(df, !contains(:packname, "Shared"))
+	sort!(df, [:expansion, :number])
 	return df
 end
 
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 begin
 	desired_card_numbers = Dict(
+		"PA" => PA,
 		"A1" => A1,
 		"A1a" => A1a,
 		"A2" => A2,
@@ -401,6 +347,7 @@ begin
 		"A4" => A4,
 		"A4a" => A4a,
 		"A4b" => A4b,
+		"PB" => PB,
 		"B1" => B1,
 	)
 	desired_cards = filter_by_desired(card_data, desired_card_numbers)
@@ -408,45 +355,51 @@ begin
 	Text("Card data successfully filtered by desired.")
 end
 
+# ╔═╡ deaa9324-b1f2-4167-8500-5f0039486d4f
+@rsubset(desired_cards, :expansion == "PA").image
+
 # ╔═╡ 136c4134-3423-447c-8a38-e3346407112c
-@rsubset(desired_cards, :series == "A1").image
+@rsubset(desired_cards, :expansion == "A1").image
 
 # ╔═╡ fbc08814-1279-4614-99ae-c3f23434ad17
-@rsubset(desired_cards, :series == "A1a").image
+@rsubset(desired_cards, :expansion == "A1a").image
 
 # ╔═╡ e3813ced-c01a-4745-99b3-fd77bf6ee6ba
-@rsubset(desired_cards, :series == "A2").image
+@rsubset(desired_cards, :expansion == "A2").image
 
 # ╔═╡ c01d4362-bdf1-4e40-b6ee-246fbb5be730
-@rsubset(desired_cards, :series == "A2a").image
+@rsubset(desired_cards, :expansion == "A2a").image
 
 # ╔═╡ f659b84a-22f5-4aa9-a2c4-ece9a1175ede
-@rsubset(desired_cards, :series == "A2b").image
+@rsubset(desired_cards, :expansion == "A2b").image
 
 # ╔═╡ 6f93bd90-25d8-497f-92ff-562fe614b5e5
-@rsubset(desired_cards, :series == "A3").image
+@rsubset(desired_cards, :expansion == "A3").image
 
 # ╔═╡ 0f4bf200-6daa-4036-86b0-c8caa23f0ec2
-@rsubset(desired_cards, :series == "A3a").image
+@rsubset(desired_cards, :expansion == "A3a").image
 
 # ╔═╡ 030f56ad-6a21-4bcb-aba5-d8ac9b2736b6
-@rsubset(desired_cards, :series == "A3b").image
+@rsubset(desired_cards, :expansion == "A3b").image
 
 # ╔═╡ 764efb07-7619-4ea5-974e-cd36d892e90e
-@rsubset(desired_cards, :series == "A4").image
+@rsubset(desired_cards, :expansion == "A4").image
 
 # ╔═╡ 14216bf3-d98c-4d0f-bd6f-d65318ef3aad
-@rsubset(desired_cards, :series == "A4a").image
+@rsubset(desired_cards, :expansion == "A4a").image
 
 # ╔═╡ 1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
-@rsubset(desired_cards, :series == "A4b").image
+@rsubset(desired_cards, :expansion == "A4b").image
+
+# ╔═╡ d7e49d4c-a24a-4b1e-a454-379903413c0e
+@rsubset(desired_cards, :expansion == "PB").image
 
 # ╔═╡ e6eb9f63-7eda-4e94-bc0b-700121f13ea0
-@rsubset(desired_cards, :series == "B1").image
+@rsubset(desired_cards, :expansion == "B1").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
-	groupby([:pack, :rarity])
+	groupby([:packname, :rarity])
 	combine(
 		:image => (x -> [copy(x)]),
 		nrow,
@@ -454,18 +407,18 @@ end
 	)  # rarities by pack
 	sort!(:rarity)
 	unstack(:rarity, :nrow, fill=0)  # create rarity columns
-	groupby(:pack)
+	groupby(:packname)
 	combine(
 		:image => (x -> [reduce(vcat, x)]),
-		Not(:pack, :image) .=> sum,
+		Not(:packname, :image) .=> sum,
 		renamecols = false,
 	)  # combine rarities in the same pack
-	transform!(Not(:pack, :image) => (+) => :total)  # add total column
+	transform!(Not(:packname, :image) => (+) => :total)  # add total column
 	select!(
-		:pack => ByRow(x -> pack_images[x]) => "Pack",
+		:packname => ByRow(x -> pack_images[x]) => "Pack",
 		:image => "Desired Cards",
 		:total => "Total",
-		Not(:pack, :image, :total),
+		Not(:packname, :image, :total),
 	)  # add pack images and column headers
 	sort!("Total", rev=true)
 end
@@ -475,25 +428,25 @@ md"## Data Summary"
 
 # ╔═╡ 7b2279cb-dbf4-4077-8c66-002d925b7806
 @chain begin card_data
-	groupby(:series)
+	groupby(:expansion)
 	combine(nrow)
-	rename!(["Series", "Total Cards"])
+	rename!(["Expansion", "Total Cards"])
 	sort!
 end
 
 # ╔═╡ 404c6734-61d2-4dc3-839c-204a16a561d5
 @chain begin card_data
-	groupby(:pack)
+	groupby(:packname)
 	combine(
 		nrow,
-		:series => unique => :series,
+		:expansion => unique => :expansion,
 	)
-	sort!([:series, :pack])
-	select!(:series, :)
-	@aside packs = _.pack
+	sort!([:expansion, :packname])
+	select!(:expansion, :)
+	@aside packs = _.packname
 	rename!(
-		:series => "Series",
-		:pack => "Pack",
+		:expansion => "Expansion",
+		:packname => "Pack",
 		:nrow => "Total Cards",
 	)
 end
@@ -537,6 +490,53 @@ pluto-output.scroll_y {
     max-height: 600px;
 }
 """
+
+# ╔═╡ b7486cfa-fc49-4cde-993e-78d6d5768db0
+# ╠═╡ disabled = true
+#=╠═╡
+card_data = @chain card_data_download begin
+	@rselect(
+		$[:expansionid, :number] = split(:id, '-'),
+		$(Not(:id)),
+	)
+	leftjoin(
+		select(
+			expansion_data,
+			:packname,
+			:packimage,
+			:expansionname,
+		),
+		select(
+			_,
+			Not([:expansionid, :pack])
+		),
+		on = :packname,
+		order = :left,
+	)
+	@rtransform! :expansionid =
+		if length(:expansionid) == 3
+			uppercase(:expansionid[1]) * uppercase(:expansionid[2]) * lowercase(:expansionid[3])
+		else
+			uppercase(:expansionid)
+		end
+	@rtransform! :number = parse(Int, :number)
+	@rtransform! :image = Resource(:image)
+	@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
+	@transform! :health = passmissing(parse).(Int, replace(:health, "" => missing))
+end
+  ╠═╡ =#
+
+# ╔═╡ 8ed2462b-c5b2-4ff4-b77f-8febe42eac58
+card_data = @chain card_data_download begin
+	@rename :cardid = :id
+	@rtransform $[:expansionid, :number] = split(:cardid, '-')
+	@rtransform :packid =
+		if first(:expansionid) =='p'
+			"promo-" * last(:expansionid)
+		else
+			:expansionid * '-' * lowercase(:pack)
+		end
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1093,6 +1093,9 @@ version = "17.4.0+2"
 # ╔═╡ Cell order:
 # ╟─01d0206c-90d7-4dab-a1be-52619d154f40
 # ╟─34436b8a-b8ad-4875-bf99-86b8f8b2a695
+# ╟─c22b8b8e-f178-425c-8882-da6ace3626f6
+# ╠═a1d06a4c-1e18-4dcd-b5d4-8c8a558000d1
+# ╟─deaa9324-b1f2-4167-8500-5f0039486d4f
 # ╟─238c0262-3734-4bc6-94ee-b907d91f47a0
 # ╠═4b18f32c-4621-4474-bf3f-808ec2b4fe1f
 # ╟─136c4134-3423-447c-8a38-e3346407112c
@@ -1126,6 +1129,9 @@ version = "17.4.0+2"
 # ╟─36ddd671-212d-4e2d-816e-8ca32a0528ee
 # ╠═4e04ba71-26c0-4d99-b04a-37550daf8a0a
 # ╟─1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
+# ╟─05544a2f-15d5-4d77-a786-a72b3f35e4fb
+# ╠═0d3091f8-d2e2-4cd9-84fe-c1a16cc4c76d
+# ╟─d7e49d4c-a24a-4b1e-a454-379903413c0e
 # ╟─c7452d22-8045-44d5-ae5b-be375f8f2fe0
 # ╠═d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 # ╟─e6eb9f63-7eda-4e94-bc0b-700121f13ea0
@@ -1147,11 +1153,15 @@ version = "17.4.0+2"
 # ╟─b8765ce3-da72-4b92-acb8-f8cec96df80d
 # ╟─c16d8096-8c8d-4487-8ad5-50bc43a5205d
 # ╟─de7fcd25-b476-4e50-a649-370a08b3d5df
-# ╟─e0de3c3d-4a10-4da3-a3a6-8783543fe0c0
 # ╟─d9d35c7c-311d-4ae1-8737-80ff3500744a
 # ╟─bdd147b1-3e4b-4c63-a11c-462c1e90c612
-# ╟─b7486cfa-fc49-4cde-993e-78d6d5768db0
-# ╟─f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
+# ╠═fcb064ab-b4ca-4898-951d-7fd623d6c8ac
+# ╠═2f5f869e-3418-4aca-9b47-76ca72a64425
+# ╠═8ed2462b-c5b2-4ff4-b77f-8febe42eac58
+# ╠═b7486cfa-fc49-4cde-993e-78d6d5768db0
+# ╠═cb34c847-da1c-47d4-99bd-5522a55cb3fb
+# ╠═34f7cfaa-fbd8-4d2a-a00c-354065a2e642
+# ╠═f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
 # ╟─92588797-2b09-4146-bce6-68a5a5cf428c
 # ╟─7b2279cb-dbf4-4077-8c66-002d925b7806
 # ╟─404c6734-61d2-4dc3-839c-204a16a561d5
