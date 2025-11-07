@@ -108,8 +108,6 @@ md"### Wisdom of Sea and Sky"
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
 	40
-	101
-	176
 ];
 
 # ╔═╡ 2cc2b217-e0d2-445b-b9ee-aaa16964621f
@@ -125,8 +123,6 @@ md"### Deluxe Pack: ex"
 
 # ╔═╡ 4e04ba71-26c0-4d99-b04a-37550daf8a0a
 A4b = [
-	355
-	356
 	365
 	370
 	372
@@ -221,7 +217,7 @@ begin
 			"https://www.serebii.net/tcgpocket/geneticapex/mewtwo.jpg",
 			:width => image_width,
 		),
-		"Mythical Island" => Resource(
+		"Mew" => Resource(
 			"https://www.serebii.net/tcgpocket/mythicalisland/mew.jpg",
 			:width => image_width,
 		),
@@ -1132,7 +1128,7 @@ version = "17.4.0+2"
 # ╟─157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
-# ╟─5726b945-44d7-4208-bc85-200a73863e21
+# ╠═5726b945-44d7-4208-bc85-200a73863e21
 # ╟─86e7000b-3675-4703-8819-470f793c2d69
 # ╟─6ae9d1a2-3733-40e2-ba0e-6a563cb76ae7
 # ╠═c3c0fa78-d354-42d0-9490-c8572b305f74
