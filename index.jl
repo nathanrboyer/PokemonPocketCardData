@@ -261,8 +261,26 @@ expansion_data = @chain expansion_data_download begin
 	transform!(:packimage => ByRow(x -> Resource(x, :width => image_width)), renamecols=false)
 end
 
-# ╔═╡ 2f5f869e-3418-4aca-9b47-76ca72a64425
-@rsubset card_data_download occursin("Promo", :pack)
+# ╔═╡ 8ed2462b-c5b2-4ff4-b77f-8febe42eac58
+card_data = @chain card_data_download begin
+	@rtransform $[:expansionid, :number] = split(:id, '-')
+	@rtransform :packid =
+		if first(:expansionid) =='p'
+			"promo-" * last(:expansionid)
+		else
+			:expansionid * '-' * lowercase(replace(:pack, r"\(.*\)" => ""))
+		end
+	@rtransform! :expansionid =
+		if length(:expansionid) == 3
+			uppercase(:expansionid[1]) * uppercase(:expansionid[2]) * lowercase(:expansionid[3])
+		else
+			uppercase(:expansionid)
+		end
+	@rtransform! :number = parse(Int, :number)
+	@rtransform! :image = Resource(:image)
+	@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
+	@transform! :health = passmissing(parse).(Int, replace(:health, "" => missing))
+end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
 @rsubset(card_data, contains(:name, r"pika"i))
@@ -281,25 +299,39 @@ end
 
 # ╔═╡ cb34c847-da1c-47d4-99bd-5522a55cb3fb
 data = @chain begin outerjoin(card_data, expansion_data, on=:packid, order=:left, makeunique=true)
+	select(
+		:expansionid,
+		:expansionname,
+		:packname,
+		:packimage,
+		:image,
+		:name,
+		:rarity,
+		:type,
+		:health,
+		:fullart,
+		:ex,
+	)
 end
 
 # ╔═╡ 34f7cfaa-fbd8-4d2a-a00c-354065a2e642
 md"""
 ## TODO:
 1. Rearrange and rename columns
-2. Fix missings and Promo inconsistencies.
+2. Fix Shared and Promo inconsistencies to get rid of missings.
 3. Rename `series` to `expansion` everywhere.
-4. Fix desired sorting to use new dataframe instead of separate dict.
-5. Automate input headers and dict conversions.
+4. Fix data summary to use combined `data` dataframe.
+5. Fix desired sorting to use new dataframe instead of separate dict.
+6. Automate input headers and dict conversions.
 """
 
 # ╔═╡ f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
-expansionpacks = let gdf = groupby(card_data, :expansion)
+expansionpacks = let gdf = groupby(card_data, :expansionid)
 	d = Dict{String,Vector{String}}()
 	for (key, df) in pairs(gdf)
-		packs = unique(df.packname)
+		packs = unique(df.pack)
 		filter!(!(==("Every")), packs)
-		push!(d, key.expansion => packs)
+		push!(d, key.expansionid => packs)
 	end
 	filter!.(!contains("Shared"), values(d))
 	for (key, value) in pairs(d)
@@ -428,7 +460,7 @@ md"## Data Summary"
 
 # ╔═╡ 7b2279cb-dbf4-4077-8c66-002d925b7806
 @chain begin card_data
-	groupby(:expansion)
+	groupby(:expansionid)
 	combine(nrow)
 	rename!(["Expansion", "Total Cards"])
 	sort!
@@ -436,17 +468,17 @@ end
 
 # ╔═╡ 404c6734-61d2-4dc3-839c-204a16a561d5
 @chain begin card_data
-	groupby(:packname)
+	groupby(:pack)
 	combine(
 		nrow,
-		:expansion => unique => :expansion,
+		:expansionid => unique => :expansionid,
 	)
-	sort!([:expansion, :packname])
-	select!(:expansion, :)
-	@aside packs = _.packname
+	sort!([:expansionid, :pack])
+	select!(:expansionid, :)
+	@aside packs = _.pack
 	rename!(
-		:expansion => "Expansion",
-		:packname => "Pack",
+		:expansionid => "Expansion",
+		:pack => "Pack",
 		:nrow => "Total Cards",
 	)
 end
@@ -490,53 +522,6 @@ pluto-output.scroll_y {
     max-height: 600px;
 }
 """
-
-# ╔═╡ b7486cfa-fc49-4cde-993e-78d6d5768db0
-# ╠═╡ disabled = true
-#=╠═╡
-card_data = @chain card_data_download begin
-	@rselect(
-		$[:expansionid, :number] = split(:id, '-'),
-		$(Not(:id)),
-	)
-	leftjoin(
-		select(
-			expansion_data,
-			:packname,
-			:packimage,
-			:expansionname,
-		),
-		select(
-			_,
-			Not([:expansionid, :pack])
-		),
-		on = :packname,
-		order = :left,
-	)
-	@rtransform! :expansionid =
-		if length(:expansionid) == 3
-			uppercase(:expansionid[1]) * uppercase(:expansionid[2]) * lowercase(:expansionid[3])
-		else
-			uppercase(:expansionid)
-		end
-	@rtransform! :number = parse(Int, :number)
-	@rtransform! :image = Resource(:image)
-	@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
-	@transform! :health = passmissing(parse).(Int, replace(:health, "" => missing))
-end
-  ╠═╡ =#
-
-# ╔═╡ 8ed2462b-c5b2-4ff4-b77f-8febe42eac58
-card_data = @chain card_data_download begin
-	@rename :cardid = :id
-	@rtransform $[:expansionid, :number] = split(:cardid, '-')
-	@rtransform :packid =
-		if first(:expansionid) =='p'
-			"promo-" * last(:expansionid)
-		else
-			:expansionid * '-' * lowercase(:pack)
-		end
-end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1155,13 +1140,11 @@ version = "17.4.0+2"
 # ╟─de7fcd25-b476-4e50-a649-370a08b3d5df
 # ╟─d9d35c7c-311d-4ae1-8737-80ff3500744a
 # ╟─bdd147b1-3e4b-4c63-a11c-462c1e90c612
-# ╠═fcb064ab-b4ca-4898-951d-7fd623d6c8ac
-# ╠═2f5f869e-3418-4aca-9b47-76ca72a64425
+# ╟─fcb064ab-b4ca-4898-951d-7fd623d6c8ac
 # ╠═8ed2462b-c5b2-4ff4-b77f-8febe42eac58
-# ╠═b7486cfa-fc49-4cde-993e-78d6d5768db0
 # ╠═cb34c847-da1c-47d4-99bd-5522a55cb3fb
-# ╠═34f7cfaa-fbd8-4d2a-a00c-354065a2e642
-# ╠═f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
+# ╟─34f7cfaa-fbd8-4d2a-a00c-354065a2e642
+# ╟─f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
 # ╟─92588797-2b09-4146-bce6-68a5a5cf428c
 # ╟─7b2279cb-dbf4-4077-8c66-002d925b7806
 # ╟─404c6734-61d2-4dc3-839c-204a16a561d5
