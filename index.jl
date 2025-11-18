@@ -23,7 +23,7 @@ md"### Promo A"
 
 # ╔═╡ a1d06a4c-1e18-4dcd-b5d4-8c8a558000d1
 PA = [
-	1
+	110
 ];
 
 # ╔═╡ 238c0262-3734-4bc6-94ee-b907d91f47a0
@@ -328,17 +328,17 @@ begin
 		select(
 			:expansionid,
 			:expansionname,
-			:packid,
-			:packname,
-			:packimage,
+			:number,			
 			:name,
 			:image,
-			:number,
 			:rarity,
 			:type,
 			:health,
 			:fullart,
 			:ex,
+			:packid,
+			:packname,
+			:packimage,
 		)
 	end
 	if nrow(data) !== length(completecases(data))
@@ -440,13 +440,13 @@ end
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(data, contains(:name, r"pika"i))
+@rsubset(data, contains(:name, r"blast"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 @rsubset(data, :expansionid == "A2a", :number == 93).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
-@rsubset(data, :rarity == "☆☆")[:, [:image, :expansionid, :number]] |> reverse
+@rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
 @rsubset(data, :expansionid == "B1")[:, [:image, :number]] |> reverse
@@ -456,6 +456,9 @@ end
 
 # ╔═╡ 92588797-2b09-4146-bce6-68a5a5cf428c
 md"## Data Summary"
+
+# ╔═╡ 3a097238-6f24-402b-aaeb-216f3f2ba7ef
+md"### Cards / Expansion"
 
 # ╔═╡ 7b2279cb-dbf4-4077-8c66-002d925b7806
 @chain begin data
@@ -468,18 +471,20 @@ md"## Data Summary"
 	sort!
 end
 
+# ╔═╡ d18c0e0f-aa4e-4a6b-8ed6-7697b28a3192
+md"### Cards / Pack"
+
 # ╔═╡ 404c6734-61d2-4dc3-839c-204a16a561d5
 @chain begin data
-	groupby(:packname)
+	groupby(:packid)
 	combine(
 		nrow,
 		:expansionid => unique => :expansionid,
 		:expansionname => unique => :expansionname,
+		:packname => unique => :packname,
 	)
 	sort!([:expansionid, :packname], lt=lt_shared)
-	select!(:expansionid, :expansionname, :)
-	@aside packs = _.packname
-	rename!(
+	select!(
 		:expansionid => "ID",
 		:expansionname => "Expansion",
 		:packname => "Pack",
@@ -487,11 +492,13 @@ end
 	)
 end
 
+# ╔═╡ 831e5e30-3522-41ec-b74f-939230c0065a
+md"### Rarities"
+
 # ╔═╡ 97e51f8d-91d4-4aab-a594-516b3aae6d90
 @chain begin data
 	groupby(:rarity)
 	combine(nrow)
-	@aside rarities = _.rarity
 	rename!(["Rarity", "Total Cards"])
 end
 
@@ -1148,8 +1155,11 @@ version = "17.4.0+2"
 # ╟─8ed2462b-c5b2-4ff4-b77f-8febe42eac58
 # ╟─cb34c847-da1c-47d4-99bd-5522a55cb3fb
 # ╟─92588797-2b09-4146-bce6-68a5a5cf428c
+# ╟─3a097238-6f24-402b-aaeb-216f3f2ba7ef
 # ╟─7b2279cb-dbf4-4077-8c66-002d925b7806
+# ╟─d18c0e0f-aa4e-4a6b-8ed6-7697b28a3192
 # ╟─404c6734-61d2-4dc3-839c-204a16a561d5
+# ╟─831e5e30-3522-41ec-b74f-939230c0065a
 # ╟─97e51f8d-91d4-4aab-a594-516b3aae6d90
 # ╟─5b7621b1-d0da-4955-844c-fd4c31373efd
 # ╠═aa94d7a0-b24a-11ef-2de2-47a66b1c37be
