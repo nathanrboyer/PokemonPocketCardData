@@ -18,16 +18,10 @@ Use this section to enter the card numbers you desire in each expansion.
 This data will be used to filter the database and sort it by number of desired cards per pack.
 """
 
-# ╔═╡ c22b8b8e-f178-425c-8882-da6ace3626f6
-md"### Promo A"
-
 # ╔═╡ a1d06a4c-1e18-4dcd-b5d4-8c8a558000d1
 PA = [
 	110
 ];
-
-# ╔═╡ 238c0262-3734-4bc6-94ee-b907d91f47a0
-md"### Genetic Apex"
 
 # ╔═╡ 4b18f32c-4621-4474-bf3f-808ec2b4fe1f
 A1 = [
@@ -44,17 +38,11 @@ A1 = [
 	282
 ];
 
-# ╔═╡ 89d6ecd9-1185-47c9-b0ad-fcbc2d8b7941
-md"### Mythical Island"
-
 # ╔═╡ 1c594f1f-5119-4e65-b873-9a98de628d7e
 A1a = [
 	82
 	84
 ];
-
-# ╔═╡ c9a803a2-d30f-4acf-86ee-6a0732a25345
-md"### Space-Time Smackdown"
 
 # ╔═╡ 7a394f68-ce0f-47d5-8515-5169925ae687
 A2 = [
@@ -63,18 +51,12 @@ A2 = [
 	201
 ];
 
-# ╔═╡ 6e1dad95-b6ec-409a-bc6c-fbf479f05ac0
-md"### Triumphant Light"
-
 # ╔═╡ 31d599a7-e4d8-4c64-bb68-de6246325213
 A2a = [
 	87
 	93
 	95
 ];
-
-# ╔═╡ 3cc50f07-e16c-4b0d-9799-cf61671a5e3d
-md"### Shining Revelry"
 
 # ╔═╡ ef199255-e146-4bc8-b2d0-accd69e97d83
 A2b = [
@@ -83,25 +65,16 @@ A2b = [
 	111
 ];
 
-# ╔═╡ 647797c9-0ad3-44b4-b35a-ad78dfafa60c
-md"### Celestial Guardians"
-
 # ╔═╡ 2bfa8df6-a36d-4d4e-8a87-14c8aabed144
 A3 = [
 	209
 ];
-
-# ╔═╡ 45a5ec15-30a3-41b7-a8b1-cc7a0a5a52d8
-md"### Extradimensional Crisis"
 
 # ╔═╡ e74b5827-8f34-43fe-a0da-4f513e6ac388
 A3a = [
 	88
 	103
 ];
-
-# ╔═╡ da7c71ce-e6b7-40db-b2bc-50fbf0b59c1f
-md"### Eevee Grove"
 
 # ╔═╡ d890bce7-bbcc-4f4c-8d00-8922b04c8b15
 A3b = [
@@ -110,24 +83,15 @@ A3b = [
 	91
 ];
 
-# ╔═╡ 03550662-ee38-4879-9a63-8380880dcc8f
-md"### Wisdom of Sea and Sky"
-
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
 	40
 ];
 
-# ╔═╡ 2cc2b217-e0d2-445b-b9ee-aaa16964621f
-md"### Secluded Springs"
-
 # ╔═╡ 0498932c-95fd-4b70-a10b-1cf32ae1390a
 A4a = [
 	20
 ];
-
-# ╔═╡ 36ddd671-212d-4e2d-816e-8ca32a0528ee
-md"### Deluxe Pack: ex"
 
 # ╔═╡ 4e04ba71-26c0-4d99-b04a-37550daf8a0a
 A4b = [
@@ -138,25 +102,58 @@ A4b = [
 	379
 ];
 
-# ╔═╡ 05544a2f-15d5-4d77-a786-a72b3f35e4fb
-md"### Promo B"
-
 # ╔═╡ 0d3091f8-d2e2-4cd9-84fe-c1a16cc4c76d
 PB = [
 	1
 ];
 
-# ╔═╡ c7452d22-8045-44d5-ae5b-be375f8f2fe0
-md"### Mega Rising"
-
 # ╔═╡ d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 B1 = [
-	19
-	230
+	16
+	35
+	52
+	67
+	150
+	151
+	174
+	175
+	184
+	217
+	219
+	224
+	231
+	234
+	236
+	245
 	272
+	274
+	278
 	279
+	285
+	286
 	304
 ];
+
+# ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
+md"### Combined"
+
+# ╔═╡ ce1dab1a-edf8-450d-82b6-3ab63f95ba81
+desired_card_numbers = Dict(
+	"PA" => PA,
+	"A1" => A1,
+	"A1a" => A1a,
+	"A2" => A2,
+	"A2a" => A2a,
+	"A2b" => A2b,
+	"A3" => A3,
+	"A3a" => A3a,
+	"A3b" => A3b,
+	"A4" => A4,
+	"A4a" => A4a,
+	"A4b" => A4b,
+	"PB" => PB,
+	"B1" => B1,
+);
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
 md"# Pack Information"
@@ -306,7 +303,7 @@ begin
 		@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
 		@rtransform! :pack = replace(:pack, "Deluxe Pack: ex" => "Shared(Deluxe Pack: ex)")
 		@rtransform! :health = ifelse(:health == "", NaN, tryparse(Int, :health))
-		@rtransform :packid =
+		@rtransform! :packid =
 			if first(:expansionid) =='p'
 				"promo-" * last(:expansionid)
 			else
@@ -324,23 +321,23 @@ end
 
 # ╔═╡ cb34c847-da1c-47d4-99bd-5522a55cb3fb
 begin
-	data = @chain begin leftjoin(card_data, expansion_data, on=:packid, order=:left, makeunique=true)
-		select(
-			:expansionid,
-			:expansionname,
-			:number,			
-			:name,
-			:image,
-			:rarity,
-			:type,
-			:health,
-			:fullart,
-			:ex,
-			:packid,
-			:packname,
-			:packimage,
-		)
-	end
+	data = leftjoin(card_data, expansion_data, on=:packid, order=:left, makeunique=true)
+	select!(
+		data,
+		:expansionid,
+		:expansionname,
+		:number,			
+		:name,
+		:image,
+		:rarity,
+		:type,
+		:health,
+		:fullart,
+		:ex,
+		:packid,
+		:packname,
+		:packimage,
+	)
 	if nrow(data) !== length(completecases(data))
 		md"## Warning: missing data detected"
 	else
@@ -348,24 +345,78 @@ begin
 	end
 end
 
+# ╔═╡ c22b8b8e-f178-425c-8882-da6ace3626f6
+let name = "PA"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 238c0262-3734-4bc6-94ee-b907d91f47a0
+let	name = "A1"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 89d6ecd9-1185-47c9-b0ad-fcbc2d8b7941
+let	name = "A1a"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ c9a803a2-d30f-4acf-86ee-6a0732a25345
+let	name = "A2"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 6e1dad95-b6ec-409a-bc6c-fbf479f05ac0
+let	name = "A2a"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 3cc50f07-e16c-4b0d-9799-cf61671a5e3d
+let	name = "A2b"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 647797c9-0ad3-44b4-b35a-ad78dfafa60c
+let	name = "A3"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 45a5ec15-30a3-41b7-a8b1-cc7a0a5a52d8
+let	name = "A3a"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ da7c71ce-e6b7-40db-b2bc-50fbf0b59c1f
+let	name = "A3b"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 03550662-ee38-4879-9a63-8380880dcc8f
+let	name = "A4"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 2cc2b217-e0d2-445b-b9ee-aaa16964621f
+let	name = "A4a"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 36ddd671-212d-4e2d-816e-8ca32a0528ee
+let	name = "A4b"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ 05544a2f-15d5-4d77-a786-a72b3f35e4fb
+let	name = "PB"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
+# ╔═╡ c7452d22-8045-44d5-ae5b-be375f8f2fe0
+let	name = "B1"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 begin
-	desired_card_numbers = Dict(
-		"PA" => PA,
-		"A1" => A1,
-		"A1a" => A1a,
-		"A2" => A2,
-		"A2a" => A2a,
-		"A2b" => A2b,
-		"A3" => A3,
-		"A3a" => A3a,
-		"A3b" => A3b,
-		"A4" => A4,
-		"A4a" => A4a,
-		"A4b" => A4b,
-		"PB" => PB,
-		"B1" => B1,
-	)
 	desired_cards = filter_by_desired(data, desired_card_numbers)
 	desired_cards_unpacked = flatten(desired_cards, :packimage)
 	Text("Card data successfully filtered by desired.")
@@ -449,7 +500,7 @@ end
 @rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(data, :expansionid == "B1")[:, [:image, :number]] |> reverse
+@rsubset(data, :expansionid == "B1")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(data, :health ≥ 200).image
@@ -1131,7 +1182,9 @@ version = "17.4.0+2"
 # ╟─c7452d22-8045-44d5-ae5b-be375f8f2fe0
 # ╠═d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 # ╟─e6eb9f63-7eda-4e94-bc0b-700121f13ea0
-# ╟─157c9090-554c-4515-9458-5d017b304aad
+# ╟─73208c22-29c9-4031-bd0f-99d8fd82cd2e
+# ╠═ce1dab1a-edf8-450d-82b6-3ab63f95ba81
+# ╠═157c9090-554c-4515-9458-5d017b304aad
 # ╟─d2540a56-4cf4-4a61-a07b-f57de767d224
 # ╟─da513126-14d4-4eaa-8e7a-f6339cb2bc17
 # ╟─5726b945-44d7-4208-bc85-200a73863e21
