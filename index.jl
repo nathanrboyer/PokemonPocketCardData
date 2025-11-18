@@ -151,6 +151,7 @@ md"### Mega Rising"
 
 # ╔═╡ d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 B1 = [
+	19
 	230
 	272
 	279
@@ -195,13 +196,29 @@ function filter_by_desired(
 		source::Union{AbstractDataFrame,GroupedDataFrame},
 		desired::AbstractDict,
 	)
-	vec = DataFrame[]
-	for (key,value) in pairs(desired)
-		push!(vec, @rsubset(source, :expansion == key, :number in value))
+	df = DataFrame()
+	for (key, value) in pairs(desired)
+		append!(df, @rsubset(source, :expansionid == key, :number in value))
 	end
-	df = reduce(vcat, vec)
-	sort!(df, [:expansion, :number])
+	sort!(df, [:expansionid, :number])
 end
+
+# ╔═╡ 287c75f4-5d2e-492d-be95-1819f6ca274d
+"""
+	lt_shared(x,y)
+
+Compare `x`, and `y` normally, unless one of them has value `"Shared"`.
+`"Shared"` is always considered "smallest".
+"""
+function lt_shared(x, y)
+	if x == "Shared"
+		return true
+	elseif y == "Shared"
+		return false
+	else
+		return isless(x,y)
+	end
+end	
 
 # ╔═╡ c16d8096-8c8d-4487-8ad5-50bc43a5205d
 md"## Data Scraping"
@@ -249,119 +266,86 @@ end
 md"## Data Cleaning"
 
 # ╔═╡ fcb064ab-b4ca-4898-951d-7fd623d6c8ac
-expansion_data = @chain expansion_data_download begin
-	@aside image_width = 60
-	transform(:packs => ByRow(jsontable) => :packs)
-	flatten(:packs)
-	select!(
-		:id => identity => :expansionid,
-		:name => identity => :expansionname,
-		:packs => ByRow(NamedTuple) => [:packid, :packname, :packimage],
-	)
-	transform!(:packimage => ByRow(x -> Resource(x, :width => image_width)), renamecols=false)
+begin
+	expansion_data = @chain expansion_data_download begin
+		@aside image_width = 60
+		transform(:packs => ByRow(jsontable) => :packs)
+		flatten(:packs)
+		select!(
+			:id => :expansionid,
+			:name => :expansionname,
+			:packs => ByRow(NamedTuple) => [:packid, :packname, :packimage],
+		)
+		transform!(:packimage => ByRow(x -> [Resource(x, :width => image_width)]), renamecols=false)
+		@rtransform! :expansionid = ifelse(:expansionid == "promo", first(:packid)*last(:packid), :expansionid)
+		@rtransform! :expansionname = ifelse(:expansionname == "Promo", :packname, :expansionname)
+		@aside for i in unique(_.expansionid)
+			push!(
+				_,
+				(
+					expansionid = i,
+					expansionname = first(@rsubset(_, :expansionid == i).expansionname),
+					packid = i*"-shared",
+					packname = "Shared",
+					packimage = only.(@rsubset(_, :expansionid == i).packimage),
+				),
+				promote = true,
+			)
+		end
+		sort!
+	end
+	Text("Expansion data cleaned successfully.")
 end
 
 # ╔═╡ 8ed2462b-c5b2-4ff4-b77f-8febe42eac58
-card_data = @chain card_data_download begin
-	@rtransform $[:expansionid, :number] = split(:id, '-')
-	@rtransform :packid =
-		if first(:expansionid) =='p'
-			"promo-" * last(:expansionid)
-		else
-			:expansionid * '-' * lowercase(replace(:pack, r"\(.*\)" => ""))
-		end
-	@rtransform! :expansionid =
-		if length(:expansionid) == 3
-			uppercase(:expansionid[1]) * uppercase(:expansionid[2]) * lowercase(:expansionid[3])
-		else
-			uppercase(:expansionid)
-		end
-	@rtransform! :number = parse(Int, :number)
-	@rtransform! :image = Resource(:image)
-	@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
-	@transform! :health = passmissing(parse).(Int, replace(:health, "" => missing))
+begin
+	card_data = @chain card_data_download begin
+		@rtransform $[:expansionid, :number] = split(:id, '-')
+		@rtransform! :number = parse(Int, :number)
+		@rtransform! :image = Resource(:image)
+		@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
+		@rtransform! :pack = replace(:pack, "Deluxe Pack: ex" => "Shared(Deluxe Pack: ex)")
+		@rtransform! :health = ifelse(:health == "", NaN, tryparse(Int, :health))
+		@rtransform :packid =
+			if first(:expansionid) =='p'
+				"promo-" * last(:expansionid)
+			else
+				:expansionid * '-' * lowercase(replace(replace(:pack, r"\(.*\)" => ""), " " => ""))
+			end
+		@rtransform! :expansionid =
+			if length(:expansionid) == 3
+				uppercase(:expansionid[1]) * uppercase(:expansionid[2]) * lowercase(:expansionid[3])
+			else
+				uppercase(:expansionid)
+			end
+	end
+	Text("Card data cleaned successfully.")
 end
-
-# ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(card_data, contains(:name, r"pika"i))
-
-# ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(card_data, :expansion == "A2a", :number == 93).image |> only
-
-# ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
-@rsubset(card_data, :rarity == "☆")[:, [:image, :expansion, :number]] |> reverse
-
-# ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(card_data, :expansion == "B1")[:, [:image, :number]] |> reverse
-
-# ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
-@rsubset(card_data, :health ≥ 180).image
 
 # ╔═╡ cb34c847-da1c-47d4-99bd-5522a55cb3fb
-data = @chain begin outerjoin(card_data, expansion_data, on=:packid, order=:left, makeunique=true)
-	select(
-		:expansionid,
-		:expansionname,
-		:packname,
-		:packimage,
-		:image,
-		:name,
-		:rarity,
-		:type,
-		:health,
-		:fullart,
-		:ex,
-	)
-end
-
-# ╔═╡ 34f7cfaa-fbd8-4d2a-a00c-354065a2e642
-md"""
-## TODO:
-1. Rearrange and rename columns
-2. Fix Shared and Promo inconsistencies to get rid of missings.
-3. Rename `series` to `expansion` everywhere.
-4. Fix data summary to use combined `data` dataframe.
-5. Fix desired sorting to use new dataframe instead of separate dict.
-6. Automate input headers and dict conversions.
-"""
-
-# ╔═╡ f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
-expansionpacks = let gdf = groupby(card_data, :expansionid)
-	d = Dict{String,Vector{String}}()
-	for (key, df) in pairs(gdf)
-		packs = unique(df.pack)
-		filter!(!(==("Every")), packs)
-		push!(d, key.expansionid => packs)
+begin
+	data = @chain begin leftjoin(card_data, expansion_data, on=:packid, order=:left, makeunique=true)
+		select(
+			:expansionid,
+			:expansionname,
+			:packid,
+			:packname,
+			:packimage,
+			:name,
+			:image,
+			:number,
+			:rarity,
+			:type,
+			:health,
+			:fullart,
+			:ex,
+		)
 	end
-	filter!.(!contains("Shared"), values(d))
-	for (key, value) in pairs(d)
-		if isempty(value)
-			d[key] = ["Booster"]
-		end
+	if nrow(data) !== length(completecases(data))
+		md"## Warning: missing data detected"
+	else
+		Text("Data combined successfully.")
 	end
-	d
-end
-
-# ╔═╡ b8765ce3-da72-4b92-acb8-f8cec96df80d
-"""
-	unpack_shared(df)
-
-Convert rows with a "Shared(<series_name>)" pack value into multiple rows with specific packs.
-"""
-function unpack_shared(df_original)
-	df = copy(df_original)
-	for row in eachrow(df)
-		if contains(row.packname, "Shared")
-			for p in expansionpacks[row.expansion]
-				newrow = copy(row)
-				newrow = (newrow..., packname = p)
-				push!(df, newrow)
-			end
-		end
-	end
-	@rsubset!(df, !contains(:packname, "Shared"))
-	sort!(df, [:expansion, :number])
-	return df
 end
 
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
@@ -382,56 +366,56 @@ begin
 		"PB" => PB,
 		"B1" => B1,
 	)
-	desired_cards = filter_by_desired(card_data, desired_card_numbers)
-	desired_cards_unpacked = unpack_shared(desired_cards)
+	desired_cards = filter_by_desired(data, desired_card_numbers)
+	desired_cards_unpacked = flatten(desired_cards, :packimage)
 	Text("Card data successfully filtered by desired.")
 end
 
 # ╔═╡ deaa9324-b1f2-4167-8500-5f0039486d4f
-@rsubset(desired_cards, :expansion == "PA").image
+@rsubset(desired_cards, :expansionid == "PA").image
 
 # ╔═╡ 136c4134-3423-447c-8a38-e3346407112c
-@rsubset(desired_cards, :expansion == "A1").image
+@rsubset(desired_cards, :expansionid == "A1").image
 
 # ╔═╡ fbc08814-1279-4614-99ae-c3f23434ad17
-@rsubset(desired_cards, :expansion == "A1a").image
+@rsubset(desired_cards, :expansionid == "A1a").image
 
 # ╔═╡ e3813ced-c01a-4745-99b3-fd77bf6ee6ba
-@rsubset(desired_cards, :expansion == "A2").image
+@rsubset(desired_cards, :expansionid == "A2").image
 
 # ╔═╡ c01d4362-bdf1-4e40-b6ee-246fbb5be730
-@rsubset(desired_cards, :expansion == "A2a").image
+@rsubset(desired_cards, :expansionid == "A2a").image
 
 # ╔═╡ f659b84a-22f5-4aa9-a2c4-ece9a1175ede
-@rsubset(desired_cards, :expansion == "A2b").image
+@rsubset(desired_cards, :expansionid == "A2b").image
 
 # ╔═╡ 6f93bd90-25d8-497f-92ff-562fe614b5e5
-@rsubset(desired_cards, :expansion == "A3").image
+@rsubset(desired_cards, :expansionid == "A3").image
 
 # ╔═╡ 0f4bf200-6daa-4036-86b0-c8caa23f0ec2
-@rsubset(desired_cards, :expansion == "A3a").image
+@rsubset(desired_cards, :expansionid == "A3a").image
 
 # ╔═╡ 030f56ad-6a21-4bcb-aba5-d8ac9b2736b6
-@rsubset(desired_cards, :expansion == "A3b").image
+@rsubset(desired_cards, :expansionid == "A3b").image
 
 # ╔═╡ 764efb07-7619-4ea5-974e-cd36d892e90e
-@rsubset(desired_cards, :expansion == "A4").image
+@rsubset(desired_cards, :expansionid == "A4").image
 
 # ╔═╡ 14216bf3-d98c-4d0f-bd6f-d65318ef3aad
-@rsubset(desired_cards, :expansion == "A4a").image
+@rsubset(desired_cards, :expansionid == "A4a").image
 
 # ╔═╡ 1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
-@rsubset(desired_cards, :expansion == "A4b").image
+@rsubset(desired_cards, :expansionid == "A4b").image
 
 # ╔═╡ d7e49d4c-a24a-4b1e-a454-379903413c0e
-@rsubset(desired_cards, :expansion == "PB").image
+@rsubset(desired_cards, :expansionid == "PB").image
 
 # ╔═╡ e6eb9f63-7eda-4e94-bc0b-700121f13ea0
-@rsubset(desired_cards, :expansion == "B1").image
+@rsubset(desired_cards, :expansionid == "B1").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
-	groupby([:packname, :rarity])
+	groupby([:packimage, :rarity])
 	combine(
 		:image => (x -> [copy(x)]),
 		nrow,
@@ -439,52 +423,72 @@ end
 	)  # rarities by pack
 	sort!(:rarity)
 	unstack(:rarity, :nrow, fill=0)  # create rarity columns
-	groupby(:packname)
+	groupby(:packimage)
 	combine(
 		:image => (x -> [reduce(vcat, x)]),
-		Not(:packname, :image) .=> sum,
+		Not(:packimage, :image) .=> sum,
 		renamecols = false,
 	)  # combine rarities in the same pack
-	transform!(Not(:packname, :image) => (+) => :total)  # add total column
+	transform!(Not(:packimage, :image) => (+) => :total)  # add total column
 	select!(
-		:packname => ByRow(x -> pack_images[x]) => "Pack",
+		:packimage => "Pack",
 		:image => "Desired Cards",
 		:total => "Total",
-		Not(:packname, :image, :total),
+		Not(:packimage, :image, :total),
 	)  # add pack images and column headers
 	sort!("Total", rev=true)
 end
+
+# ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
+@rsubset(data, contains(:name, r"pika"i))
+
+# ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
+@rsubset(data, :expansionid == "A2a", :number == 93).image |> only
+
+# ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
+@rsubset(data, :rarity == "☆☆")[:, [:image, :expansionid, :number]] |> reverse
+
+# ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
+@rsubset(data, :expansionid == "B1")[:, [:image, :number]] |> reverse
+
+# ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
+@rsubset(data, :health ≥ 200).image
 
 # ╔═╡ 92588797-2b09-4146-bce6-68a5a5cf428c
 md"## Data Summary"
 
 # ╔═╡ 7b2279cb-dbf4-4077-8c66-002d925b7806
-@chain begin card_data
+@chain begin data
 	groupby(:expansionid)
-	combine(nrow)
-	rename!(["Expansion", "Total Cards"])
+	combine(
+		:expansionname => unique => :expansionname,
+		nrow,
+	)
+	rename!(["ID", "Expansion", "Total Cards"])
 	sort!
 end
 
 # ╔═╡ 404c6734-61d2-4dc3-839c-204a16a561d5
-@chain begin card_data
-	groupby(:pack)
+@chain begin data
+	groupby(:packname)
 	combine(
 		nrow,
 		:expansionid => unique => :expansionid,
+		:expansionname => unique => :expansionname,
 	)
-	sort!([:expansionid, :pack])
-	select!(:expansionid, :)
-	@aside packs = _.pack
+	sort!([:expansionid, :packname], lt=lt_shared)
+	select!(:expansionid, :expansionname, :)
+	@aside packs = _.packname
 	rename!(
-		:expansionid => "Expansion",
-		:pack => "Pack",
+		:expansionid => "ID",
+		:expansionname => "Expansion",
+		:packname => "Pack",
 		:nrow => "Total Cards",
 	)
 end
 
 # ╔═╡ 97e51f8d-91d4-4aab-a594-516b3aae6d90
-@chain begin card_data
+@chain begin data
 	groupby(:rarity)
 	combine(nrow)
 	@aside rarities = _.rarity
@@ -1116,7 +1120,7 @@ version = "17.4.0+2"
 # ╟─1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
 # ╟─05544a2f-15d5-4d77-a786-a72b3f35e4fb
 # ╠═0d3091f8-d2e2-4cd9-84fe-c1a16cc4c76d
-# ╟─d7e49d4c-a24a-4b1e-a454-379903413c0e
+# ╠═d7e49d4c-a24a-4b1e-a454-379903413c0e
 # ╟─c7452d22-8045-44d5-ae5b-be375f8f2fe0
 # ╠═d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 # ╟─e6eb9f63-7eda-4e94-bc0b-700121f13ea0
@@ -1135,16 +1139,14 @@ version = "17.4.0+2"
 # ╟─7079b6c8-bee9-4e5f-a62a-f0e0617b7225
 # ╟─7284ca8c-09e5-44ab-98de-db8d2e56053d
 # ╟─42d22e06-8fd2-42a4-90ca-f81fafb66b7d
-# ╟─b8765ce3-da72-4b92-acb8-f8cec96df80d
+# ╟─287c75f4-5d2e-492d-be95-1819f6ca274d
 # ╟─c16d8096-8c8d-4487-8ad5-50bc43a5205d
 # ╟─de7fcd25-b476-4e50-a649-370a08b3d5df
 # ╟─d9d35c7c-311d-4ae1-8737-80ff3500744a
 # ╟─bdd147b1-3e4b-4c63-a11c-462c1e90c612
 # ╟─fcb064ab-b4ca-4898-951d-7fd623d6c8ac
-# ╠═8ed2462b-c5b2-4ff4-b77f-8febe42eac58
-# ╠═cb34c847-da1c-47d4-99bd-5522a55cb3fb
-# ╟─34f7cfaa-fbd8-4d2a-a00c-354065a2e642
-# ╟─f0dcb13a-7706-45e6-8f3c-1d45e7f36a9e
+# ╟─8ed2462b-c5b2-4ff4-b77f-8febe42eac58
+# ╟─cb34c847-da1c-47d4-99bd-5522a55cb3fb
 # ╟─92588797-2b09-4146-bce6-68a5a5cf428c
 # ╟─7b2279cb-dbf4-4077-8c66-002d925b7806
 # ╟─404c6734-61d2-4dc3-839c-204a16a561d5
