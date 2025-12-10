@@ -85,12 +85,12 @@ A3b = [
 
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
-	40
+	
 ];
 
 # ╔═╡ 0498932c-95fd-4b70-a10b-1cf32ae1390a
 A4a = [
-	20
+	
 ];
 
 # ╔═╡ 4e04ba71-26c0-4d99-b04a-37550daf8a0a
@@ -110,19 +110,14 @@ PB = [
 # ╔═╡ d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 B1 = [
 	35
-	52
 	67
-	150
 	151
 	174
-	175
-	184
-	217
 	219
 	224
 	234
 	236
-	245
+	254
 	272
 	274
 	278
@@ -489,7 +484,7 @@ end
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(data, contains(:name, r"blast"i))
+@rsubset(data, contains(:name, r"pika"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
 @rsubset(data, :expansionid == "A2a", :number == 93).image |> only
@@ -1176,7 +1171,7 @@ version = "17.4.0+2"
 # ╟─1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
 # ╟─05544a2f-15d5-4d77-a786-a72b3f35e4fb
 # ╠═0d3091f8-d2e2-4cd9-84fe-c1a16cc4c76d
-# ╠═d7e49d4c-a24a-4b1e-a454-379903413c0e
+# ╟─d7e49d4c-a24a-4b1e-a454-379903413c0e
 # ╟─c7452d22-8045-44d5-ae5b-be375f8f2fe0
 # ╠═d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 # ╟─e6eb9f63-7eda-4e94-bc0b-700121f13ea0
