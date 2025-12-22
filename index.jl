@@ -129,7 +129,7 @@ B1 = [
 
 # ╔═╡ c0d6dc1c-f180-4e41-8784-c86600be7925
 B1a = [
-	35
+	73
 ];
 
 # ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
@@ -413,6 +413,11 @@ let	name = "B1"
 	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
 end
 
+# ╔═╡ 6a209624-266f-4379-b371-85ee746f5c85
+let	name = "B1a"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 begin
 	desired_cards = filter_by_desired(data, desired_card_numbers)
@@ -501,7 +506,7 @@ end
 @rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(data, :expansionid == "B1")[:, [:image, :number]]
+@rsubset(data, :expansionid == "B1a")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(data, :health ≥ 200).image
@@ -1183,6 +1188,7 @@ version = "17.4.0+2"
 # ╟─c7452d22-8045-44d5-ae5b-be375f8f2fe0
 # ╠═d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 # ╟─e6eb9f63-7eda-4e94-bc0b-700121f13ea0
+# ╟─6a209624-266f-4379-b371-85ee746f5c85
 # ╠═c0d6dc1c-f180-4e41-8784-c86600be7925
 # ╟─a823c6f8-6311-4343-b51b-d6599c1abd8e
 # ╟─73208c22-29c9-4031-bd0f-99d8fd82cd2e
