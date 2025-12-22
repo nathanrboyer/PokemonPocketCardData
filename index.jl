@@ -127,6 +127,11 @@ B1 = [
 	304
 ];
 
+# ╔═╡ c0d6dc1c-f180-4e41-8784-c86600be7925
+B1a = [
+	35
+];
+
 # ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
 md"### Combined"
 
@@ -146,6 +151,7 @@ desired_card_numbers = Dict(
 	"A4b" => A4b,
 	"PB" => PB,
 	"B1" => B1,
+	"B1a" => B1a,
 );
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -294,7 +300,6 @@ begin
 		@rtransform! :number = parse(Int, :number)
 		@rtransform! :image = Resource(:image)
 		@rtransform! :rarity = replace(:rarity, "Crown Rare" => "♛")
-		@rtransform! :pack = replace(:pack, "Deluxe Pack: ex" => "Shared(Deluxe Pack: ex)")
 		@rtransform! :health = ifelse(:health == "", NaN, tryparse(Int, :health))
 		@rtransform! :packid =
 			if first(:expansionid) =='p'
@@ -331,7 +336,7 @@ begin
 		:packname,
 		:packimage,
 	)
-	if nrow(data) !== length(completecases(data))
+	if nrow(data) != sum(completecases(data))
 		md"## Warning: missing data detected"
 	else
 		Text("Data combined successfully.")
@@ -456,6 +461,9 @@ end
 
 # ╔═╡ e6eb9f63-7eda-4e94-bc0b-700121f13ea0
 @rsubset(desired_cards, :expansionid == "B1").image
+
+# ╔═╡ a823c6f8-6311-4343-b51b-d6599c1abd8e
+@rsubset(desired_cards, :expansionid == "B1a").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -597,7 +605,7 @@ PlutoUI = "~0.7.62"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.11.7"
+julia_version = "1.11.8"
 manifest_format = "2.0"
 project_hash = "425bf9f972c15446a3cc2db07b7072092e6acbbd"
 
@@ -1175,6 +1183,8 @@ version = "17.4.0+2"
 # ╟─c7452d22-8045-44d5-ae5b-be375f8f2fe0
 # ╠═d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 # ╟─e6eb9f63-7eda-4e94-bc0b-700121f13ea0
+# ╠═c0d6dc1c-f180-4e41-8784-c86600be7925
+# ╟─a823c6f8-6311-4343-b51b-d6599c1abd8e
 # ╟─73208c22-29c9-4031-bd0f-99d8fd82cd2e
 # ╠═ce1dab1a-edf8-450d-82b6-3ab63f95ba81
 # ╟─157c9090-554c-4515-9458-5d017b304aad
