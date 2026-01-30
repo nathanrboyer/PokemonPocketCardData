@@ -126,6 +126,11 @@ B1a = [
 	86
 ];
 
+# ╔═╡ bdb7e460-fbb5-495f-813a-84dc0e04f612
+B2 = [
+	1
+];
+
 # ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
 md"### Combined"
 
@@ -146,6 +151,7 @@ desired_card_numbers = Dict(
 	"PB" => PB,
 	"B1" => B1,
 	"B1a" => B1a,
+	"B2" => B2,
 );
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -412,6 +418,11 @@ let	name = "B1a"
 	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
 end
 
+# ╔═╡ 01fb3209-e463-4236-b3e7-929f9d62f6df
+let	name = "B2"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 begin
 	desired_cards = filter_by_desired(data, desired_card_numbers)
@@ -463,6 +474,9 @@ end
 
 # ╔═╡ a823c6f8-6311-4343-b51b-d6599c1abd8e
 @rsubset(desired_cards, :expansionid == "B1a").image
+
+# ╔═╡ a95c30d8-0425-4ee8-bc5d-6a7e5a47b763
+@rsubset(desired_cards, :expansionid == "B2").image
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -1204,6 +1218,9 @@ version = "17.7.0+0"
 # ╟─6a209624-266f-4379-b371-85ee746f5c85
 # ╠═c0d6dc1c-f180-4e41-8784-c86600be7925
 # ╟─a823c6f8-6311-4343-b51b-d6599c1abd8e
+# ╟─01fb3209-e463-4236-b3e7-929f9d62f6df
+# ╠═bdb7e460-fbb5-495f-813a-84dc0e04f612
+# ╟─a95c30d8-0425-4ee8-bc5d-6a7e5a47b763
 # ╟─73208c22-29c9-4031-bd0f-99d8fd82cd2e
 # ╠═ce1dab1a-edf8-450d-82b6-3ab63f95ba81
 # ╟─157c9090-554c-4515-9458-5d017b304aad
