@@ -123,7 +123,25 @@ B1a = [
 
 # ╔═╡ bdb7e460-fbb5-495f-813a-84dc0e04f612
 B2 = [
+	33
+	34
+	87
+	109
+	119
+	120
+	145
+	153
+	158
+	162
+	169
+	171
+	175
+	176
+	178
+	194
+	200
 	202
+	203
 ];
 
 # ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
@@ -500,16 +518,16 @@ end
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(data, contains(:name, r"blast"i))
+@rsubset(data, contains(:name, r"guzz"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(data, :expansionid == "A2a", :number == 93).image |> only
+@rsubset(data, :expansionid == "B2", :number == 109).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
 @rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(data, :expansionid == "B1a")[:, [:image, :number]]
+@rsubset(data, :expansionid == "B2")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(data, :health ≥ 200).image
