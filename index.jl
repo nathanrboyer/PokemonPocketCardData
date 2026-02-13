@@ -123,15 +123,15 @@ B1a = [
 
 # ╔═╡ bdb7e460-fbb5-495f-813a-84dc0e04f612
 B2 = [
-	33
 	34
+	66
 	87
 	109
-	119
 	120
+	127
+	133
 	145
 	153
-	158
 	162
 	169
 	171
@@ -631,7 +631,7 @@ PlutoUI = "~0.7.77"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.12.4"
+julia_version = "1.12.5"
 manifest_format = "2.0"
 project_hash = "b502f01458ca5116617f4b5831f2abea5ae14fd6"
 
