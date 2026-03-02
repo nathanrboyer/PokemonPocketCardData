@@ -25,8 +25,6 @@ PA = [
 
 # ╔═╡ 4b18f32c-4621-4474-bf3f-808ec2b4fe1f
 A1 = [
-	254
-	262
 	267
 	273
 	274
@@ -35,7 +33,6 @@ A1 = [
 	277
 	280
 	281
-	282
 ];
 
 # ╔═╡ 1c594f1f-5119-4e65-b873-9a98de628d7e
@@ -109,8 +106,6 @@ PB = [
 
 # ╔═╡ d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 B1 = [
-	174
-	207
 	234
 	304
 ];
@@ -123,25 +118,33 @@ B1a = [
 
 # ╔═╡ bdb7e460-fbb5-495f-813a-84dc0e04f612
 B2 = [
-	34
-	66
+	14
+	19
+	26
+	27
+	35
+	48
+	69
+	73
 	87
-	109
-	120
+	97
 	127
+	131
 	133
-	145
-	153
+	138
 	162
-	169
 	171
-	175
 	176
 	178
-	194
-	200
 	202
 	203
+];
+
+# ╔═╡ 67eb6bd1-ff5f-42a9-9704-6b0a36b77510
+B2a = [
+	86
+	87
+	97
 ];
 
 # ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
@@ -165,6 +168,7 @@ desired_card_numbers = Dict(
 	"B1" => B1,
 	"B1a" => B1a,
 	"B2" => B2,
+	"B2a" => B2a,
 );
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -350,7 +354,7 @@ begin
 		:packimage,
 	)
 	if nrow(data) != sum(completecases(data))
-		md"## Warning: missing data detected"
+		md"## Warning: missing data detected!"
 	else
 		Text("Data combined successfully.")
 	end
@@ -436,6 +440,11 @@ let	name = "B2"
 	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
 end
 
+# ╔═╡ 8d890523-3687-4e1e-8be3-368bc386fd2a
+let	name = "B2a"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 begin
 	desired_cards = filter_by_desired(data, desired_card_numbers)
@@ -491,6 +500,9 @@ end
 # ╔═╡ a95c30d8-0425-4ee8-bc5d-6a7e5a47b763
 @rsubset(desired_cards, :expansionid == "B2").image
 
+# ╔═╡ 030d679e-8670-447e-96bf-444ff3594a15
+@rsubset(desired_cards, :expansionid == "B2a").image
+
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
 	groupby([:packimage, :rarity])
@@ -518,16 +530,16 @@ end
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(data, contains(:name, r"guzz"i))
+@rsubset(data, contains(:name, r"sand"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(data, :expansionid == "B2", :number == 109).image |> only
+@rsubset(data, :expansionid == "B2", :number == 170).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
 @rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(data, :expansionid == "B2")[:, [:image, :number]]
+@rsubset(data, :expansionid == "B2a")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(data, :health ≥ 200).image
@@ -1234,6 +1246,9 @@ version = "17.7.0+0"
 # ╟─01fb3209-e463-4236-b3e7-929f9d62f6df
 # ╠═bdb7e460-fbb5-495f-813a-84dc0e04f612
 # ╟─a95c30d8-0425-4ee8-bc5d-6a7e5a47b763
+# ╠═8d890523-3687-4e1e-8be3-368bc386fd2a
+# ╠═67eb6bd1-ff5f-42a9-9704-6b0a36b77510
+# ╠═030d679e-8670-447e-96bf-444ff3594a15
 # ╟─73208c22-29c9-4031-bd0f-99d8fd82cd2e
 # ╠═ce1dab1a-edf8-450d-82b6-3ab63f95ba81
 # ╟─157c9090-554c-4515-9458-5d017b304aad
