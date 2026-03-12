@@ -119,19 +119,14 @@ B1a = [
 # ╔═╡ bdb7e460-fbb5-495f-813a-84dc0e04f612
 B2 = [
 	14
-	19
 	26
 	27
-	35
 	48
-	69
 	73
 	87
-	97
 	127
 	131
 	133
-	138
 	162
 	171
 	176
@@ -142,6 +137,7 @@ B2 = [
 
 # ╔═╡ 67eb6bd1-ff5f-42a9-9704-6b0a36b77510
 B2a = [
+	57
 	87
 	97
 ];
@@ -529,10 +525,10 @@ end
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(data, contains(:name, r"sand"i))
+@rsubset(data, contains(:name, r"ape"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(data, :expansionid == "B2", :number == 170).image |> only
+@rsubset(data, :expansionid == "A2a", :number == 93).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
 @rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
