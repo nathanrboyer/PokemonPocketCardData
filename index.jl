@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.21
+# v0.20.24
 
 using Markdown
 using InteractiveUtils
@@ -118,28 +118,22 @@ B1a = [
 
 # ╔═╡ bdb7e460-fbb5-495f-813a-84dc0e04f612
 B2 = [
-	14
 	27
 	48
 	73
 	87
-	127
 	131
-	133
 	162
 	171
 	176
 	178
-	202
 	203
 ];
 
 # ╔═╡ 67eb6bd1-ff5f-42a9-9704-6b0a36b77510
 B2a = [
-	57
-	87
-	97
-	106
+	3
+	36
 ];
 
 # ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
@@ -537,7 +531,7 @@ end
 @rsubset(data, :expansionid == "B2a")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
-@rsubset(data, :health ≥ 200).image
+@rsubset(data, :health ≥ 230).image
 
 # ╔═╡ 92588797-2b09-4146-bce6-68a5a5cf428c
 md"## Data Summary"
