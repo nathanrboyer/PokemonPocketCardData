@@ -20,7 +20,7 @@ This data will be used to filter the database and sort it by number of desired c
 
 # ╔═╡ a1d06a4c-1e18-4dcd-b5d4-8c8a558000d1
 PA = [
-	
+
 ];
 
 # ╔═╡ 4b18f32c-4621-4474-bf3f-808ec2b4fe1f
@@ -82,12 +82,12 @@ A3b = [
 
 # ╔═╡ 7deeda72-a210-4f92-a059-da6bf63c98f5
 A4 = [
-	
+
 ];
 
 # ╔═╡ 0498932c-95fd-4b70-a10b-1cf32ae1390a
 A4a = [
-	
+
 ];
 
 # ╔═╡ 4e04ba71-26c0-4d99-b04a-37550daf8a0a
@@ -100,7 +100,7 @@ A4b = [
 
 # ╔═╡ 0d3091f8-d2e2-4cd9-84fe-c1a16cc4c76d
 PB = [
-	
+
 ];
 
 # ╔═╡ d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
@@ -120,7 +120,6 @@ B2 = [
 	27
 	48
 	73
-	87
 	131
 	162
 	171
@@ -136,12 +135,8 @@ B2a = [
 
 # ╔═╡ 07e1ecd5-5bb2-42db-8df7-e989d328f472
 B2b = [
-	14
 	16
-	20
 	27
-	28
-	29
 	50
 	93
 	94
@@ -234,7 +229,7 @@ function lt_shared(x, y)
 	else
 		return isless(x,y)
 	end
-end	
+end
 
 # ╔═╡ c16d8096-8c8d-4487-8ad5-50bc43a5205d
 md"## Data Scraping"
@@ -344,7 +339,7 @@ begin
 		data,
 		:expansionid,
 		:expansionname,
-		:number,			
+		:number,
 		:name,
 		:image,
 		:rarity,
@@ -538,6 +533,7 @@ end
 		Not(:packimage, :image, :total),
 	)  # add pack images and column headers
 	sort!("Total", rev=true)
+	WideCell
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
@@ -606,35 +602,6 @@ end
 # ╔═╡ 5b7621b1-d0da-4955-844c-fd4c31373efd
 md"## Dependency Package Loading"
 
-# ╔═╡ 9888e0c8-335a-45f7-a16f-2ffda567f98b
-md"## Visual Tweaks"
-
-# ╔═╡ bc238aa5-05db-40bc-9ed1-cfa8dd891441
-Text("Page width and scroll bar height were increased from the default values.")
-
-# ╔═╡ 0c19b482-4946-4ee4-96db-0b5fc5f6f551
-# Increase page width
-# Reference: https://discourse.julialang.org/t/pluto-pdf-and-printing/65055/5
-# Reference: https://discourse.julialang.org/t/cell-width-in-pluto-notebook/49761/11
-html"""
-<style>
-body:not(.fake_class) main {
-	max-width: max(50%, 1000px);
-	margin-right: 0px;
-	align-self: center;
-}
-</style>
-"""
-
-# ╔═╡ 46bf0b39-6f4a-4748-bcd4-07cdb9ec3272
-# Increase vertical cell height
-# Reference: https://stackoverflow.com/questions/66624243/how-to-fit-pluto-jl-output-cell-to-dataframe-size
-html"""<style>
-pluto-output.scroll_y {
-    max-height: 600px;
-}
-"""
-
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -645,9 +612,9 @@ PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 DataFramesMeta = "~0.15.6"
-HTTP = "~1.10.15"
+HTTP = "~1.11.0"
 JSONTables = "~1.0.3"
-PlutoUI = "~0.7.77"
+PlutoUI = "~0.7.80"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -656,7 +623,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.5"
 manifest_format = "2.0"
-project_hash = "b502f01458ca5116617f4b5831f2abea5ae14fd6"
+project_hash = "eb7636dece4e31a8a5b322790b73a9b6f511609b"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -719,9 +686,9 @@ version = "1.3.0+1"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
-git-tree-sha1 = "d9d26935a0bcffc87d2613ce14c527c99fc543fd"
+git-tree-sha1 = "21d088c496ea22914fe80906eb5bce65755e5ec8"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
-version = "2.5.0"
+version = "2.5.1"
 
 [[deps.Crayons]]
 git-tree-sha1 = "249fe38abf76d48563e2f4556bebd215aa317e15"
@@ -747,9 +714,9 @@ version = "0.15.6"
 
 [[deps.DataStructures]]
 deps = ["OrderedCollections"]
-git-tree-sha1 = "e357641bb3e0638d353c4b29ea0e40ea644066a6"
+git-tree-sha1 = "e86f4a2805f7f19bec5129bc9150c38208e5dc23"
 uuid = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
-version = "0.19.3"
+version = "0.19.4"
 
 [[deps.DataValueInterfaces]]
 git-tree-sha1 = "bfc1187b79289637fa0ef6d4436ebdfe6905cbd6"
@@ -789,9 +756,9 @@ version = "1.11.0"
 
 [[deps.HTTP]]
 deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "ExceptionUnwrapping", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "PrecompileTools", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
-git-tree-sha1 = "5e6fe50ae7f23d171f44e311c2960294aaa0beb5"
+git-tree-sha1 = "51059d23c8bb67911a2e6fd5130229113735fc7e"
 uuid = "cd3eb016-35fb-5094-929b-558a96fad6f3"
-version = "1.10.19"
+version = "1.11.0"
 
 [[deps.Hyperscript]]
 deps = ["Test"]
@@ -801,9 +768,9 @@ version = "0.0.5"
 
 [[deps.HypertextLiteral]]
 deps = ["Tricks"]
-git-tree-sha1 = "7134810b1afce04bbc1045ca1985fbe81ce17653"
+git-tree-sha1 = "d1a86724f81bcd184a38fd284ce183ec067d71a0"
 uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
-version = "0.9.5"
+version = "1.0.0"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
@@ -934,15 +901,15 @@ version = "1.11.0"
 
 [[deps.MbedTLS]]
 deps = ["Dates", "MbedTLS_jll", "MozillaCACerts_jll", "NetworkOptions", "Random", "Sockets"]
-git-tree-sha1 = "c067a280ddc25f196b5e7df3877c6b226d390aaf"
+git-tree-sha1 = "8785729fa736197687541f7053f6d8ab7fc44f92"
 uuid = "739be429-bea8-5141-9913-cc70e7f3736d"
-version = "1.1.9"
+version = "1.1.10"
 
 [[deps.MbedTLS_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "926c6af3a037c68d02596a44c22ec3595f5f760b"
+git-tree-sha1 = "ff69a2b1330bcb730b9ac1ab7dd680176f5896b8"
 uuid = "c8ffd9c3-330d-5841-b78e-0817d7145fa1"
-version = "2.28.6+0"
+version = "2.28.1010+0"
 
 [[deps.Missings]]
 deps = ["DataAPI"]
@@ -1000,9 +967,9 @@ weakdeps = ["REPL"]
 
 [[deps.PlutoUI]]
 deps = ["AbstractPlutoDingetjes", "Base64", "ColorTypes", "Dates", "Downloads", "FixedPointNumbers", "Hyperscript", "HypertextLiteral", "IOCapture", "InteractiveUtils", "Logging", "MIMEs", "Markdown", "Random", "Reexport", "URIs", "UUIDs"]
-git-tree-sha1 = "6ed167db158c7c1031abf3bd67f8e689c8bdf2b7"
+git-tree-sha1 = "fbc875044d82c113a9dee6fc14e16cf01fd48872"
 uuid = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-version = "0.7.77"
+version = "0.7.80"
 
 [[deps.PooledArrays]]
 deps = ["DataAPI", "Future"]
@@ -1012,21 +979,27 @@ version = "1.4.3"
 
 [[deps.PrecompileTools]]
 deps = ["Preferences"]
-git-tree-sha1 = "5aa36f7049a63a1528fe8f7c3f2113413ffd4e1f"
+git-tree-sha1 = "07a921781cab75691315adc645096ed5e370cb77"
 uuid = "aea7be01-6a6a-4083-8856-8a6e6704d82a"
-version = "1.2.1"
+version = "1.3.3"
 
 [[deps.Preferences]]
 deps = ["TOML"]
-git-tree-sha1 = "522f093a29b31a93e34eaea17ba055d850edea28"
+git-tree-sha1 = "8b770b60760d4451834fe79dd483e318eee709c4"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
-version = "1.5.1"
+version = "1.5.2"
 
 [[deps.PrettyTables]]
 deps = ["Crayons", "LaTeXStrings", "Markdown", "PrecompileTools", "Printf", "REPL", "Reexport", "StringManipulation", "Tables"]
-git-tree-sha1 = "c5a07210bd060d6a8491b0ccdee2fa0235fc00bf"
+git-tree-sha1 = "624de6279ab7d94fc9f672f0068107eb6619732c"
 uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
-version = "3.1.2"
+version = "3.3.2"
+
+    [deps.PrettyTables.extensions]
+    PrettyTablesTypstryExt = "Typstry"
+
+    [deps.PrettyTables.weakdeps]
+    Typstry = "f0ed7684-a786-439e-b1e3-3b82803b501e"
 
 [[deps.Printf]]
 deps = ["Unicode"]
@@ -1091,9 +1064,9 @@ version = "1.11.1"
 
 [[deps.StringManipulation]]
 deps = ["PrecompileTools"]
-git-tree-sha1 = "a3c1536470bf8c5e02096ad4853606d7c8f62721"
+git-tree-sha1 = "d05693d339e37d6ab134c5ab53c29fce5ee5d7d5"
 uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
-version = "0.4.2"
+version = "0.4.4"
 
 [[deps.StructTypes]]
 deps = ["Dates", "UUIDs"]
@@ -1164,9 +1137,9 @@ version = "1.11.0"
 
 [[deps.Unitful]]
 deps = ["Dates", "LinearAlgebra", "Random"]
-git-tree-sha1 = "c25751629f5baaa27fef307f96536db62e1d754e"
+git-tree-sha1 = "57e1b2c9de4bd6f40ecb9de4ac1797b81970d008"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-version = "1.27.0"
+version = "1.28.0"
 
     [deps.Unitful.extensions]
     ConstructionBaseUnitfulExt = "ConstructionBase"
@@ -1297,9 +1270,5 @@ version = "17.7.0+0"
 # ╟─97e51f8d-91d4-4aab-a594-516b3aae6d90
 # ╟─5b7621b1-d0da-4955-844c-fd4c31373efd
 # ╠═aa94d7a0-b24a-11ef-2de2-47a66b1c37be
-# ╟─9888e0c8-335a-45f7-a16f-2ffda567f98b
-# ╟─bc238aa5-05db-40bc-9ed1-cfa8dd891441
-# ╟─0c19b482-4946-4ee4-96db-0b5fc5f6f551
-# ╟─46bf0b39-6f4a-4748-bcd4-07cdb9ec3272
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
