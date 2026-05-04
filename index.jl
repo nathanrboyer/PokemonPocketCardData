@@ -130,10 +130,8 @@ B2 = [
 B2a = [
 	28
 	33
-	45
 	48
 	63
-	74
 	90
 	112
 ];
@@ -144,6 +142,46 @@ B2b = [
 	94
 	105
 	106
+];
+
+# ╔═╡ d56a06ed-f5bc-4baa-a3d2-3d6010da218b
+B3 = [
+	13
+	20
+	28
+	30
+	37
+	45
+	50
+	51
+	61
+	71
+	76
+	74
+	77
+	80
+	84
+	100
+	102
+	106
+	111
+	114
+	446
+	449
+	455
+	457
+	458
+	467
+	468
+	467
+	469
+	140
+	141
+	146
+	148
+	163
+	169
+	174
 ];
 
 # ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
@@ -169,6 +207,7 @@ desired_card_numbers = Dict(
 	"B2" => B2,
 	"B2a" => B2a,
 	"B2b" => B2b,
+	"B3" => B3,
 );
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -293,14 +332,28 @@ begin
 		@rtransform! :expansionid = ifelse(:expansionid == "promo", first(:packid)*last(:packid), :expansionid)
 		@rtransform! :expansionname = ifelse(:expansionname == "Promo", :packname, :expansionname)
 		@aside for i in unique(_.expansionid)
+			dfi = @rsubset(_, :expansionid == i)
+			# Add Shared row
 			push!(
 				_,
 				(
 					expansionid = i,
-					expansionname = first(@rsubset(_, :expansionid == i).expansionname),
+					expansionname = first(dfi.expansionname),
 					packid = i*"-shared",
 					packname = "Shared",
-					packimage = only.(@rsubset(_, :expansionid == i).packimage),
+					packimage = only.(dfi.packimage),
+				),
+				promote = true,
+			)
+			# Add Expansion row
+			push!(
+				_,
+				(
+					expansionid = i,
+					expansionname = first(dfi.expansionname),
+					packid = i * '-' * filter(!isspace, lowercase(first(dfi.expansionname))),
+					packname = first(dfi.expansionname),
+					packimage = only.(dfi.packimage),
 				),
 				promote = true,
 			)
@@ -450,6 +503,11 @@ let	name = "B2b"
 	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
 end
 
+# ╔═╡ f6e80a11-e4f2-43b3-a5de-f0f38a2da63c
+let	name = "B3"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 begin
 	desired_cards = filter_by_desired(data, desired_card_numbers)
@@ -511,6 +569,9 @@ end
 # ╔═╡ 300d2351-7a79-4656-80e5-27d6455b31fb
 @rsubset(desired_cards, :expansionid == "B2b").image
 
+# ╔═╡ 9bd40203-99e7-4350-8f54-81ea68a91167
+@rsubset(desired_cards, :expansionid == "B3").image
+
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
 	groupby([:packimage, :rarity])
@@ -548,7 +609,7 @@ end
 @rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(data, :expansionid == "B2b")[:, [:image, :number]]
+@rsubset(data, :expansionid == "B3")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(data, :health ≥ 230).image
@@ -1238,6 +1299,9 @@ version = "17.7.0+0"
 # ╟─b015ca10-b765-4168-ab08-f0884560f8b9
 # ╠═07e1ecd5-5bb2-42db-8df7-e989d328f472
 # ╟─300d2351-7a79-4656-80e5-27d6455b31fb
+# ╟─f6e80a11-e4f2-43b3-a5de-f0f38a2da63c
+# ╠═d56a06ed-f5bc-4baa-a3d2-3d6010da218b
+# ╟─9bd40203-99e7-4350-8f54-81ea68a91167
 # ╟─73208c22-29c9-4031-bd0f-99d8fd82cd2e
 # ╠═ce1dab1a-edf8-450d-82b6-3ab63f95ba81
 # ╟─157c9090-554c-4515-9458-5d017b304aad
