@@ -237,7 +237,7 @@ md"## Function Definitions"
 
 # ╔═╡ 42d22e06-8fd2-42a4-90ca-f81fafb66b7d
 """
-	filter_by_desired(source, desired)
+	filter_by_desired(source, desired) -> DataFrame
 
 Filter `source` dataframe by a dictionary of `desired` cards.
 Each key in the dictionary corresponds to a card `:expansion`,
@@ -252,6 +252,35 @@ function filter_by_desired(
 		append!(df, @rsubset(source, :expansionid == key, :number in value))
 	end
 	sort!(df, [:expansionid, :number])
+end
+
+# ╔═╡ a7445978-b0ae-4b4d-a004-999ed76950b0
+"""
+	pull_desired_images(desired_cards, desired_card_numbers) -> Dict
+
+Extract the card images for all `desired_card_numbers`
+from the table of `desired_cards` by expansion.
+
+Each key in `desired_card_numbers` corresponds to a card `:expansion`,
+and each value in the dictionary is a vector of card `:numbers`.
+The `desired_cards` DataFrame contains images for each desired card
+along with other unused data. It is the result of the `filter_by_desired` function.
+The `desired_card_images` are return in a dictionary by expansion.
+"""
+function pull_desired_images(
+	desired_cards::AbstractDataFrame,
+	desired_card_numbers::AbstractDict,
+	)
+	desired_card_images = Dict(
+			[
+				(
+					id,
+					@rsubset(desired_cards, :expansionid == id).image
+				)
+				for id in keys(desired_card_numbers)
+			]
+		)
+	return desired_card_images
 end
 
 # ╔═╡ 287c75f4-5d2e-492d-be95-1819f6ca274d
@@ -511,65 +540,66 @@ end
 begin
 	desired_cards = filter_by_desired(data, desired_card_numbers)
 	desired_cards_unpacked = flatten(desired_cards, :packimage)
+	desired_card_images = pull_desired_images(desired_cards, desired_card_numbers)
 	Text("Card data successfully filtered by desired.")
 end
 
 # ╔═╡ deaa9324-b1f2-4167-8500-5f0039486d4f
-@rsubset(desired_cards, :expansionid == "PA").image
+desired_card_images["PA"]
 
 # ╔═╡ 136c4134-3423-447c-8a38-e3346407112c
-@rsubset(desired_cards, :expansionid == "A1").image
+desired_card_images["A1"]
 
 # ╔═╡ fbc08814-1279-4614-99ae-c3f23434ad17
-@rsubset(desired_cards, :expansionid == "A1a").image
+desired_card_images["A1a"]
 
 # ╔═╡ e3813ced-c01a-4745-99b3-fd77bf6ee6ba
-@rsubset(desired_cards, :expansionid == "A2").image
+desired_card_images["A2"]
 
 # ╔═╡ c01d4362-bdf1-4e40-b6ee-246fbb5be730
-@rsubset(desired_cards, :expansionid == "A2a").image
+desired_card_images["A2a"]
 
 # ╔═╡ f659b84a-22f5-4aa9-a2c4-ece9a1175ede
-@rsubset(desired_cards, :expansionid == "A2b").image
+desired_card_images["A2b"]
 
 # ╔═╡ 6f93bd90-25d8-497f-92ff-562fe614b5e5
-@rsubset(desired_cards, :expansionid == "A3").image
+desired_card_images["A3"]
 
 # ╔═╡ 0f4bf200-6daa-4036-86b0-c8caa23f0ec2
-@rsubset(desired_cards, :expansionid == "A3a").image
+desired_card_images["A3a"]
 
 # ╔═╡ 030f56ad-6a21-4bcb-aba5-d8ac9b2736b6
-@rsubset(desired_cards, :expansionid == "A3b").image
+desired_card_images["A3b"]
 
 # ╔═╡ 764efb07-7619-4ea5-974e-cd36d892e90e
-@rsubset(desired_cards, :expansionid == "A4").image
+desired_card_images["A4"]
 
 # ╔═╡ 14216bf3-d98c-4d0f-bd6f-d65318ef3aad
-@rsubset(desired_cards, :expansionid == "A4a").image
+desired_card_images["A4a"]
 
 # ╔═╡ 1b1ca141-7aa3-4d1b-890d-aa4de36d7a15
-@rsubset(desired_cards, :expansionid == "A4b").image
+desired_card_images["A4b"]
 
 # ╔═╡ d7e49d4c-a24a-4b1e-a454-379903413c0e
-@rsubset(desired_cards, :expansionid == "PB").image
+desired_card_images["PB"]
 
 # ╔═╡ e6eb9f63-7eda-4e94-bc0b-700121f13ea0
-@rsubset(desired_cards, :expansionid == "B1").image
+desired_card_images["B1"]
 
 # ╔═╡ a823c6f8-6311-4343-b51b-d6599c1abd8e
-@rsubset(desired_cards, :expansionid == "B1a").image
+desired_card_images["B1a"]
 
 # ╔═╡ a95c30d8-0425-4ee8-bc5d-6a7e5a47b763
-@rsubset(desired_cards, :expansionid == "B2").image
+desired_card_images["B2"]
 
 # ╔═╡ 030d679e-8670-447e-96bf-444ff3594a15
-@rsubset(desired_cards, :expansionid == "B2a").image
+desired_card_images["B2a"]
 
 # ╔═╡ 300d2351-7a79-4656-80e5-27d6455b31fb
-@rsubset(desired_cards, :expansionid == "B2b").image
+desired_card_images["B2b"]
 
 # ╔═╡ 9bd40203-99e7-4350-8f54-81ea68a91167
-@rsubset(desired_cards, :expansionid == "B3").image
+desired_card_images["B3"]
 
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
@@ -663,6 +693,9 @@ end
 
 # ╔═╡ 5b7621b1-d0da-4955-844c-fd4c31373efd
 md"## Dependency Package Loading"
+
+# ╔═╡ 2a1f62e5-4857-4cb0-bffc-e27836132241
+TableOfContents()
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1318,6 +1351,7 @@ version = "17.7.0+0"
 # ╟─7079b6c8-bee9-4e5f-a62a-f0e0617b7225
 # ╟─7284ca8c-09e5-44ab-98de-db8d2e56053d
 # ╟─42d22e06-8fd2-42a4-90ca-f81fafb66b7d
+# ╟─a7445978-b0ae-4b4d-a004-999ed76950b0
 # ╟─287c75f4-5d2e-492d-be95-1819f6ca274d
 # ╟─c16d8096-8c8d-4487-8ad5-50bc43a5205d
 # ╟─de7fcd25-b476-4e50-a649-370a08b3d5df
@@ -1335,5 +1369,6 @@ version = "17.7.0+0"
 # ╟─97e51f8d-91d4-4aab-a594-516b3aae6d90
 # ╟─5b7621b1-d0da-4955-844c-fd4c31373efd
 # ╠═aa94d7a0-b24a-11ef-2de2-47a66b1c37be
+# ╠═2a1f62e5-4857-4cb0-bffc-e27836132241
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
