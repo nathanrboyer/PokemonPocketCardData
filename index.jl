@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.20.24
+# v0.20.25
 
 using Markdown
 using InteractiveUtils
@@ -146,7 +146,6 @@ B2b = [
 # ╔═╡ d56a06ed-f5bc-4baa-a3d2-3d6010da218b
 B3 = [
 	13
-	30
 	37
 	45
 	50
@@ -154,16 +153,12 @@ B3 = [
 	61
 	71
 	73
-	74
-	80
-	84
 	100
 	111
 	114
 	116
 	128
 	134
-	137
 	141
 	148
 	163
