@@ -105,7 +105,6 @@ PB = [
 
 # ╔═╡ d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 B1 = [
-	234
 	304
 ];
 
@@ -128,10 +127,6 @@ B2 = [
 
 # ╔═╡ 67eb6bd1-ff5f-42a9-9704-6b0a36b77510
 B2a = [
-	33
-	48
-	63
-	90
 	112
 ];
 
@@ -139,7 +134,6 @@ B2a = [
 B2b = [
 	93
 	94
-	105
 	106
 ];
 
@@ -627,7 +621,7 @@ end
 @rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(data, :expansionid == "B3a")[:, [:image, :number]]
+@rsubset(data, :expansionid == "B3")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(data, :health ≥ 230).image
