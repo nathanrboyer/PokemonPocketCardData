@@ -56,7 +56,6 @@ A2a = [
 
 # ╔═╡ ef199255-e146-4bc8-b2d0-accd69e97d83
 A2b = [
-	89
 	90
 	111
 ];
@@ -94,6 +93,7 @@ A4b = [
 	370
 	372
 	373
+	374
 	379
 ];
 
@@ -104,11 +104,13 @@ PB = [
 
 # ╔═╡ d9ad11e7-2099-4ec7-b4c3-70d83adbdecc
 B1 = [
+	268
 	304
 ];
 
 # ╔═╡ c0d6dc1c-f180-4e41-8784-c86600be7925
 B1a = [
+	26
 	85
 	86
 ];
@@ -119,6 +121,7 @@ B2 = [
 	164
 	178
 	189
+	191
 	194
 	203
 	210
@@ -149,11 +152,6 @@ B3a = [
 	19
 	26
 	28
-	35
-	37
-	43
-	45
-	53
 	60
 ];
 
@@ -612,16 +610,16 @@ desired_card_images["B3a"]
 end
 
 # ╔═╡ c3c0fa78-d354-42d0-9490-c8572b305f74
-@rsubset(data, contains(:name, r"gard"i))
+@rsubset(data, contains(:name, r"zone"i))
 
 # ╔═╡ 762e56e8-087e-4a7c-9c7f-a6b5006a0cbf
-@rsubset(data, :expansionid == "B2", :number == 203).image |> only
+@rsubset(data, :expansionid == "B3", :number == 197).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
 @rsubset(data, :rarity == "☆☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(data, :expansionid == "B3")[:, [:image, :number]]
+@rsubset(data, :expansionid == "B3a")[:, [:image, :number]]
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(data, :health ≥ 230).image
