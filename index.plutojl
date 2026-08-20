@@ -141,6 +141,7 @@ B2b = [
 B3 = [
 	163
 	168
+	199
 	210
 	233
 ];
@@ -156,6 +157,24 @@ B3b = [
 
 # ╔═╡ 9aae6baa-00fc-4e2b-81cf-0b68d62ce050
 B4 = [
+	5
+	18
+	40
+	55
+	68
+	69
+	70
+	74
+	80
+	82
+	89
+	107
+	108
+	112
+	113
+	118
+	141
+	144
 	154
 	161
 	164
@@ -304,15 +323,20 @@ begin
 		"GET",
 		join([
 			"https://raw.githubusercontent.com/chase-manning/",
-			"pokemon-tcg-pocket-cards/refs/heads/main/",
+			"pokemon-tcg-pocket-cards/refs/heads/main/data/",
 			repo_version,
-			".json",
+			"/cards.min.json",
 		]),
 	)
 	card_data_download = website_response1.body |> jsontable |> DataFrame
 	website_response2 = HTTP.request(
 		"GET",
-		"https://raw.githubusercontent.com/chase-manning/pokemon-tcg-pocket-cards/refs/heads/main/expansions.json",
+		join([
+			"https://raw.githubusercontent.com/chase-manning/",
+			"pokemon-tcg-pocket-cards/refs/heads/main/data/",
+			repo_version,
+			"/expansions.min.json",
+		]),
 	)
 	expansion_data_download = website_response2.body |> jsontable |> DataFrame
 	alternate_sources = md"""
@@ -343,8 +367,9 @@ begin
 		select!(
 			:id => :expansionid,
 			:name => :expansionname,
-			:packs => ByRow(NamedTuple) => [:packid, :packname, :packimage],
+			:packs => ByRow(NamedTuple) => [:packid, :packname, :packimage, :png],
 		)
+		select!(Not(:png))
 		transform!(:packimage => ByRow(x -> [Resource(x, :width => image_width)]), renamecols=false)
 		@rtransform! :expansionid = ifelse(:expansionid == "promo", first(:packid)*last(:packid), :expansionid)
 		@rtransform! :expansionname = ifelse(:expansionname == "Promo", :packname, :expansionname)
