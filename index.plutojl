@@ -155,25 +155,18 @@ B3b = [
 
 # ╔═╡ 9aae6baa-00fc-4e2b-81cf-0b68d62ce050
 B4 = [
-	5
 	40
 	68
 	70
 	74
-	80
 	82
 	89
 	108
 	112
 	113
-	141
-	144
-	164
 	196
-	198
 	200
 	215
-	225
 	230
 	231
 ];
@@ -183,10 +176,18 @@ B4a = [
 	5
 	21
 	26
-	75
 	83
 	105
 	107
+];
+
+# ╔═╡ 98ccda76-c520-4a8e-a441-235e14f1093f
+B4b = [
+	403
+	404
+	407
+	408
+	409
 ];
 
 # ╔═╡ 73208c22-29c9-4031-bd0f-99d8fd82cd2e
@@ -217,6 +218,7 @@ desired_card_numbers = Dict(
 	"B3b" => B3b,
 	"B4" => B4,
 	"B4a" => B4a,
+	"B4b" => B4b,
 );
 
 # ╔═╡ d2540a56-4cf4-4a61-a07b-f57de767d224
@@ -572,6 +574,11 @@ let	name = "B4a"
 	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
 end
 
+# ╔═╡ ea5dd7c5-b06b-4f67-bc6f-5886f5174d75
+let	name = "B4b"
+	md"### $(@rsubset(data, :expansionid == name).expansionname |> unique)"
+end
+
 # ╔═╡ 157c9090-554c-4515-9458-5d017b304aad
 begin
 	desired_cards = filter_by_desired(data, desired_card_numbers)
@@ -649,6 +656,9 @@ desired_card_images["B4"]
 # ╔═╡ 34ae7739-c4f1-4cad-8d81-d32199ea3051
 desired_card_images["B4a"]
 
+# ╔═╡ 3f89697a-8200-4c0d-8093-a99e75e14d86
+desired_card_images["B4b"]
+
 # ╔═╡ 5726b945-44d7-4208-bc85-200a73863e21
 @chain desired_cards_unpacked begin
 	groupby([:packimage, :rarity])
@@ -683,10 +693,10 @@ end
 @rsubset(data, :expansionid == "B3", :number == 197).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
-@rsubset(data, :rarity == "☆☆")[:, [:image, :expansionid, :number]] |> reverse
+@rsubset(data, :rarity == "☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
-@rsubset(data, :expansionid == "B4a")[:, [:image, :number]]
+@rsubset(data, :expansionid == "B4b")[:, [:image, :number]] |> reverse
 
 # ╔═╡ 2916685d-07b4-4fce-822a-c42ec8f8605c
 @rsubset(data, :health ≥ 230).image
@@ -764,7 +774,7 @@ PlutoUI = "~0.7.83"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.12.6"
+julia_version = "1.12.7"
 manifest_format = "2.0"
 project_hash = "be4300efb8dd7801ccdfadd800a0439ca1aec6e9"
 
@@ -824,7 +834,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.3.0+1"
+version = "1.3.1+2"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1075,7 +1085,7 @@ version = "1.6.1"
 [[deps.OpenSSL_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "458c3c95-2e84-50aa-8efc-19380b2a3a95"
-version = "3.5.4+0"
+version = "3.5.6+0"
 
 [[deps.OrderedCollections]]
 git-tree-sha1 = "94ba93778373a53bfd5a0caaf7d809c445292ff4"
@@ -1366,6 +1376,9 @@ version = "1.64.0+1"
 # ╟─60a36850-df7c-4200-addd-9cce3cb591e1
 # ╠═5d7e120f-37ae-4e41-a4c5-e790cc401aba
 # ╟─34ae7739-c4f1-4cad-8d81-d32199ea3051
+# ╟─ea5dd7c5-b06b-4f67-bc6f-5886f5174d75
+# ╠═98ccda76-c520-4a8e-a441-235e14f1093f
+# ╟─3f89697a-8200-4c0d-8093-a99e75e14d86
 # ╟─73208c22-29c9-4031-bd0f-99d8fd82cd2e
 # ╠═ce1dab1a-edf8-450d-82b6-3ab63f95ba81
 # ╟─157c9090-554c-4515-9458-5d017b304aad
