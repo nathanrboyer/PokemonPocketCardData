@@ -156,14 +156,8 @@ B3b = [
 # ╔═╡ 9aae6baa-00fc-4e2b-81cf-0b68d62ce050
 B4 = [
 	40
-	68
 	70
-	74
-	82
-	89
 	108
-	112
-	113
 	196
 	200
 	215
@@ -173,8 +167,6 @@ B4 = [
 
 # ╔═╡ 5d7e120f-37ae-4e41-a4c5-e790cc401aba
 B4a = [
-	5
-	21
 	26
 	83
 	105
@@ -184,9 +176,7 @@ B4a = [
 # ╔═╡ 98ccda76-c520-4a8e-a441-235e14f1093f
 B4b = [
 	403
-	404
 	407
-	408
 	409
 ];
 
@@ -693,7 +683,7 @@ end
 @rsubset(data, :expansionid == "B3", :number == 197).image |> only
 
 # ╔═╡ 5a7f7ec0-67e4-424b-9a1c-03cf870d735b
-@rsubset(data, :rarity == "☆")[:, [:image, :expansionid, :number]] |> reverse
+@rsubset(data, :rarity == "☆☆")[:, [:image, :expansionid, :number]] |> reverse
 
 # ╔═╡ 684d49af-05c5-4fae-84c0-33867f619371
 @rsubset(data, :expansionid == "B4b")[:, [:image, :number]] |> reverse
